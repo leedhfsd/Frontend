@@ -1,0 +1,70 @@
+import Link from "next/link";
+import Seo from "../components/Seo";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+export default function Login() {
+
+  const router = useRouter();
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  console.log(userId, password);
+  const handleLogin = async (item) => {
+    item.preventDefault();
+    if (!window) return;
+    if (!userId || !password) {
+      alert("아이디와 비밀번호를 입력해주세요.");
+      return;
+    }
+    try {
+      //로그인 api 부분 
+      console.log("작성예정입니다,.");
+    } catch (item) {
+      console.error(item);
+    }
+  }
+
+  return (
+    <div className="">
+      <div className="flex flex-col items-center center pt-16">
+        <Seo title="로그인" />
+        <div className="w-2/5">
+          <Link href="/">
+            <a><img className=""src="logo.jpg" alt=""/></a>
+          </Link>
+        </div>
+        <div className="">
+          <div className="">
+            <form className="flex flex-col w-96">
+              <label className="py-4" htmlFor="">로그인</label>
+              <input className="rounded-md py-2 border border-zinc-200"
+              value={userId}
+              onChange={(item) => setUserId(item.target.value)}
+              type="text" placeholder="아이디"/>
+              <input className="rounded-md py-2 border border-zinc-200"
+              value={password}
+              onChange={(item) => setPassword(item.target.value)} 
+              type="text" placeholder="비밀번호"/>
+              <button onClick={handleLogin}
+              className="bg-sky-900 text-white rounded-md py-2 my-8 bold" type="submit">로그인</button>
+            </form>
+          </div>
+        </div>
+        <style jsx>{`
+        .center {
+          position: fixed;
+          top: 5%;
+          left: 50%;
+          transform: translate(-50%, 0);
+        }
+        input:focus{
+          border-color:#0D4A6E;
+          outline: none;
+      }
+      `}</style>
+      </div>
+    </div>
+  )
+}
