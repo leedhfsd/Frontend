@@ -8,7 +8,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex flex-row items-center justify-between my-4">
+      <div className="flex flex-row items-center justify-between my-4 mx-8">
         <Link href="/">
           <a><img className="w-28"src="logo.jpg" alt=""/></a>
         </Link>

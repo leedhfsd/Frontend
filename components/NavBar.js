@@ -11,7 +11,7 @@ export default function NavBar() {
     <nav>
       <div className="flex flex-row text-md">
         <Link href="/staff">
-        <a style={{marginLeft: 32}}className={router.pathname === "/staff" ? "active" : "common"}>인사</a>
+        <a style={{marginLeft: 0}}className={router.pathname === "/staff" ? "active" : "common"}>인사</a>
         </Link>
         <Link href="/order">
           <a className={router.pathname === "/order" ? "active" : "common"}>발주</a>

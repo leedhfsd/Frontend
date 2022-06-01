@@ -7,6 +7,8 @@ export default function Layout({children}) {
     <>
       <div className="mx-80">
         <Header />
+      </div>
+      <div className="mx-96">
         <NavBar />
       </div>
       <div className="">{children}</div>
