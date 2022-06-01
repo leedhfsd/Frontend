@@ -15,8 +15,8 @@ export default function Profit() {
           >수익코드확인</button>
         </div>
       </div>
-      <article className="">
-        <form className="flex flex-row justify-between border rounded-md">
+      <article className="border-2 rounded-md">
+        <form className="flex flex-row justify-between">
           <div className="flex flex-col">
             <label>시작 날짜</label>
             <input placeholder="YYYY-MM-DD"/>
@@ -36,7 +36,7 @@ export default function Profit() {
           <button className="bg-sky-900 text-white rounded-md px-6">조회</button>
         </form>
       </article>
-      <article className="my-16 border">
+      <article className="my-16 border-2">
         <div>총 xx건</div>
         <table className="w-full">
           <thead align="center" className="border-y-2 border-sky-900">

@@ -28,14 +28,11 @@ export default function NavBar() {
         <Link href="/event">
           <a className={router.pathname === "/event" ? "active" : "common"}>이벤트</a>
         </Link>
-        <Link href="/profit-view">
-          <a className={router.pathname === "/profit-view" ? "active" : "common"}>수익 조회</a>
+        <Link href="/transaction-check">
+          <a className={router.pathname === "/transaction-check" ? "active" : "common"}>조회</a>
         </Link>
         <Link href="/profit-enter">
           <a className={router.pathname === "/profit-enter" ? "active" : "common"}>수익 입력</a>
-        </Link>
-        <Link href="/spending-view">
-          <a className={router.pathname === "/spending-view" ? "active" : "common"}>지출 조회</a>
         </Link>
         <Link href="/spending-enter">
           <a className={router.pathname === "/spending-enter" ? "active" : "common"}>지출 입력</a>
