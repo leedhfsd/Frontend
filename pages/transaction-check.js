@@ -1,8 +1,10 @@
 import Link from "next/link";
+import Seo from "../components/Seo";
 
 export default function Profit() {
   return (
   <div>
+    <Seo title="거래내역조회"/>
     <main className="mx-96">
       <div className="flex flex-row justify-between my-8">
         <div className="flex-col">
@@ -37,17 +39,17 @@ export default function Profit() {
         </form>
       </article>
       <article className="my-16 border-2">
-        <div>총 xx건</div>
+        <div>총 0건</div>
         <table className="w-full">
-          <thead align="center" className="border-y-2 border-sky-900">
+          <thead align="" className="border-y-2 border-sky-900">
             <td>날짜</td>
-            <td>분류코드</td>
+            <td>물품분류코드</td>
             <td>물품명</td>
             <td>물품정가</td>
             <td>수입/지출</td>
           </thead>
           <tbody>
-            <tr align="center" className="">
+            <tr align="" className="">
               <td>2022-05-31</td>
               <td>01</td>
               <td>붕어싸만코</td>
@@ -56,7 +58,7 @@ export default function Profit() {
             </tr>
           </tbody>
           <tbody>
-            <tr align="center" className="">
+            <tr align="" className="">
               <td>2022-06-01</td>
               <td>02</td>
               <td>카스</td>
