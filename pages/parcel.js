@@ -1,6 +1,10 @@
+import Seo from "../components/Seo";
 
 export default function Parcel() {
-  return <div>
-    <h1>parcel</h1>
-  </div>
+  return (
+    <div>
+      <Seo title="택배"/>
+      <h1>택배</h1>
+    </div>
+  )
 }

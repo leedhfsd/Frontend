@@ -2,6 +2,7 @@ import Link from "next/link";
 import Seo from "../components/Seo";
 
 export default function Profit() {
+  
   return (
   <div>
     <Seo title="거래내역조회"/>
