@@ -19,9 +19,6 @@ export default function NavBar() {
         <Link href="/product">
           <a className={router.pathname === "/product" ? "active" : "common"}>물품</a>
         </Link>
-        <Link href="/branch">
-          <a className={router.pathname === "/branch" ? "active" : "common"}>지점</a>
-        </Link>
         <Link href="/parcel">
           <a className={router.pathname === "/parcel" ? "active" : "common"}>택배</a>
         </Link>
