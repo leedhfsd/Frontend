@@ -1,78 +1,191 @@
 import Link from "next/link";
 import Seo from "../components/Seo";
+import { useState } from "react";
 
-export default function Profit() {
+function Profit() {
+  const [input, setInput] = useState({
+    startDate:"",
+    endDate:"",
+    code:"",
+    branchId:""
+  })
+  const [enter, setEnter] = useState([]);
+  const [sum, setSum] = useState(0);
+  const onChange = (event) => {
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    })
+  };
   
+  const handleClick = (event) => {
+    event.preventDefault();
+    if (input.branchId === "" || input.code === "" || input.endDate === "" || input.startDate === "") {
+      alert("모든 칸을 입력해주세요.");
+      return;
+    }
+    setEnter([...enter, input]);
+    setInput({
+      startDate:"",
+      endDate:"",
+      code:"",
+      branchId:""
+    });
+  }
+
   return (
-  <div>
-    <Seo title="거래내역조회"/>
-    <main className="mx-96">
-      <div className="flex flex-row justify-between my-8">
-        <div className="flex-col">
-          <h1 className="text-2xl font-bold">거래내역조회</h1>
-          <h1 className="text-xs text-gray-400">고객님의 해당 기간동안의 거래내역을 확인할 수 있습니다.</h1>
-        </div>
-        <div className="flex">
-          <button className="text-sm rounded-md"
-          onClick={() => window.open('/code/profit-code', '_blank')}
-          >수익코드확인</button>
-        </div>
-      </div>
+    <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col">
-            <label>시작 날짜</label>
-            <input placeholder="YYYY-MM-DD"/>
+          <div className="flex flex-col basis-1/5">
+            <label className="">시작 날짜</label>
+            <input name="startDate" onChange={onChange} value={input.startDate}
+            type="date" placeholder="YYYY-MM-DD"/>
           </div>
-          <div className="flex flex-col">
-            <label>종료 날짜</label>
-            <input placeholder="YYYY-MM-DD"/>
+          <div className="flex flex-col basis-1/5">
+            <label className="">종료 날짜</label>
+            <input name="endDate" onChange={onChange} value={input.endDate}
+            type="date" placeholder="YYYY-MM-DD"/>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col basis-1/5">
             <label>수익 코드</label>
-            <input placeholder="00~"/>
+            <input name="code" onChange={onChange} value={input.code}
+            type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
-          <div className="flex flex-col">
-            <label>지점 ID</label>
-            <input placeholder="지점 ID"/>
+          <div className="flex flex-col basis-1/5">
+            <label>지점 번호</label>
+            <input name="branchId" onChange={onChange} value={input.branchId}
+            type="number" placeholder="지점번호를 입력해주세요."/>
           </div>
-          <button className="bg-sky-900 text-white rounded-md px-6">조회</button>
+          <div>
+            <button onClick={handleClick}
+            className="bg-sky-700 text-white rounded-md px-6 h-full">조회</button>
+          </div>
         </form>
       </article>
       <article className="my-16 border-2">
-        <div>총 0건</div>
+        <div>총 {enter.length}건</div>
         <table className="w-full">
-          <thead align="" className="border-y-2 border-sky-900">
-            <td>날짜</td>
-            <td>물품분류코드</td>
-            <td>물품명</td>
-            <td>물품정가</td>
-            <td>수입/지출</td>
+          <thead align="" className="border-y-2 border-sky-700">
+            <td width="25%">날짜</td>
+            <td width="25%">지출코드</td>
+            <td width="25%">금액</td>
+            <td width="25%">지점번호</td>
           </thead>
-          <tbody>
-            <tr align="" className="">
-              <td>2022-05-31</td>
-              <td>01</td>
-              <td>붕어싸만코</td>
-              <td>1500</td>
-              <td>수입>(코드번호)</td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr align="" className="">
-              <td>2022-06-01</td>
-              <td>02</td>
-              <td>카스</td>
-              <td>2500</td>
-              <td>수입>(코드번호)</td>
-            </tr>
-          </tbody>
           <tr align="left">
-            <td>수익 합계: <span className="text-blue-600">유도된계산값</span></td>
-            <td>지출 합계: <span className="text-red-600">유도된계산값</span></td>
+            <td>수익 합계: <span className="text-blue-600">{sum} 원</span></td>
           </tr>
         </table>
       </article>
+    </div>
+  )
+}
+
+function Spending() {
+  const [input, setInput] = useState({
+    startDate:"",
+    endDate:"",
+    code:"",
+    branchId:""
+  })
+  const [enter, setEnter] = useState([]);
+  const [sum, setSum] = useState(0);
+  const onChange = (event) => {
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    })
+  };
+  
+  const handleClick = (event) => {
+    event.preventDefault();
+    if (input.branchId === "" || input.code === "" || input.endDate === "" || input.startDate === "") {
+      alert("모든 칸을 입력해주세요.");
+      return;
+    }
+    setEnter([...enter, input]);
+    setInput({
+      startDate:"",
+      endDate:"",
+      code:"",
+      branchId:""
+    })
+  }
+
+  return (
+    <div>
+      <article className="border-2 rounded-md">
+        <form className="flex flex-row justify-between">
+          <div className="flex flex-col basis-1/5">
+            <label className="">시작 날짜</label>
+            <input name="startDate" onChange={onChange} value={input.startDate}
+            type="date" placeholder="YYYY-MM-DD"/>
+          </div>
+          <div className="flex flex-col basis-1/5">
+            <label className="">종료 날짜</label>
+            <input name="endDate" onChange={onChange} value={input.endDate}
+            type="date" placeholder="YYYY-MM-DD"/>
+          </div>
+          <div className="flex flex-col basis-1/5">
+            <label>지출 코드</label>
+            <input name="code" onChange={onChange} value={input.code}
+            type="number" placeholder="코드번호를 입력해주세요."/>
+          </div>
+          <div className="flex flex-col basis-1/5">
+            <label>지점 번호</label>
+            <input name="branchId" onChange={onChange} value={input.branchId}
+            type="number" placeholder="지점번호를 입력해주세요."/>
+          </div>
+          <div>
+            <button onClick={handleClick}
+            className="bg-sky-700 text-white rounded-md px-6 h-full">조회</button>
+          </div>
+        </form>
+      </article>
+      <article className="my-16 border-2">
+        <div>총 {enter.length}건</div>
+        <table className="w-full">
+          <thead align="" className="border-y-2 border-sky-700">
+            <td width="25%">날짜</td>
+            <td width="25%">지출코드</td>
+            <td width="25%">금액</td>
+            <td width="25%">지점번호</td>
+          </thead>
+          <tr align="left">
+            <td>지출 합계: <span className="text-red-600">{sum} 원</span></td>
+          </tr>
+        </table>
+      </article>
+    </div>
+  )
+}
+
+
+export default function TransactionCheck() {
+  const [type, setType] = useState("profit");
+  const onChange = (event) => setType(event.target.value);
+
+  return (
+  <div>
+    <Seo title="조회"/>
+    <main className="mx-96">
+      <article>
+        <div className="flex flex-row justify-between my-8">
+          <div className="flex-col">
+            <h1 className="text-2xl font-bold">거래내역조회</h1>
+            <h1 className="text-xs text-gray-400">고객님의 해당 기간동안의 거래내역을 조회할 수 있습니다.</h1>
+            <button className="text-sm rounded-md">코드확인</button>
+          </div>
+          <div>
+            <label htmlFor="type-select" className="px-4">거래 유형: </label>
+            <select value={type} onChange={onChange} id="type-select">
+              <option value="profit">수익 조회</option>
+              <option value="spending">지출 조회</option>
+            </select>
+          </div>
+        </div>
+      </article>
+      {type === "profit" ? <Profit /> : <Spending />}
     </main>
   </div>
   )
