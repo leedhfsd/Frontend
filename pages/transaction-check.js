@@ -164,6 +164,10 @@ function Spending() {
 export default function TransactionCheck() {
   const [type, setType] = useState("profit");
   const onChange = (event) => setType(event.target.value);
+  const openWindow = () => {
+    const options = 'top=10, left=10, width=400, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+    window.open("/code","코드", options);
+  }
 
   return (
   <div>
@@ -174,7 +178,8 @@ export default function TransactionCheck() {
           <div className="flex-col">
             <h1 className="text-2xl font-bold">거래내역조회</h1>
             <h1 className="text-xs text-gray-400">고객님의 해당 기간동안의 거래내역을 조회할 수 있습니다.</h1>
-            <button className="text-sm rounded-md">코드확인</button>
+            <button onClick={openWindow}
+            className="text-sm rounded-md">코드확인</button>
           </div>
           <div>
             <label htmlFor="type-select" className="px-4">거래 유형: </label>

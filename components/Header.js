@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 export default function Header() {
 
   const router = useRouter();
-  if (router.pathname === "/login") return null
+  if (router.pathname === "/login" || router.pathname === "/code") return null
 
   return (
     <>
