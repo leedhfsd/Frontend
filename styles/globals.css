@@ -28,3 +28,27 @@
   }
 }
 
+.parceldiv {
+  text-align: center;
+}
+
+.parcelbutton {
+  border:1px solid #ccc;
+  width: 10%;
+  margin: 10px;
+}
+
+.parcelFieldset {  
+  border:1px solid black;
+  justify-content: center;
+  width: 60%;
+  margin: 0 auto;
+  padding: 30px;
+  font-weight:bold;  
+}
+
+.parcelInput {  
+  border:1px solid #ccc;
+  width: 70%;
+  margin: 10px;
+}
