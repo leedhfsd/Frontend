@@ -48,49 +48,49 @@ export default function ParcelService() {
       <div className="parcelFieldset">
         <h1>정보 입력</h1>
         <li>
-          <label for="user-name">택배 종류 선택 </label>
+          <label className="parcelLabel" for="package_type">택배 종류 선택 </label>
           <select id="package_type" onChange={onChange}>
             <option value="택배">택배</option>
             <option value="반값택배">반값택배</option>
           </select>
         </li>
         <li>
-          <label for="user-name">지점 </label>
+          <label className="parcelLabel" for="user-name">지점 </label>
           <input className="parcelInput" onChange={onChange} value={input.branch}
-            type="string" placeholder="지점을 입력해주세요." />
+            type="string" placeholder="지점을 입력해주세요."/>
         </li>
         <li>
-          <label for="user-name">무게 </label>
+          <label className="parcelLabel" for="user-name">무게 </label>
           <input className="parcelInput" onChange={onChange} value={input.weight}
             type="string" placeholder="무게를 입력해주세요." />
         </li>
         <li>
-          <label for="user-name">지점 </label>
+          <label className="parcelLabel" for="user-name">배송자 전화번호 </label>
           <input className="parcelInput" onChange={onChange} value={input.b_phone}
             type="string" placeholder="배송자 전화번호를을 입력해주세요." />
         </li>
         <li>
-          <label for="user-name">지점 </label>
+          <label className="parcelLabel" for="user-name">배송자 이름 </label>
           <input className="parcelInput" onChange={onChange} value={input.b_name}
             type="string" placeholder="배송자 이름을 입력해주세요." />
         </li>
         <li>
-          <label for="user-name">지점 </label>
+          <label className="parcelLabel" for="user-name">배송지 주소 </label>
           <input className="parcelInput" onChange={onChange} value={input.b_address}
-            type="string" placeholder="배송지점을 입력해주세요." />
+            type="string" placeholder="배송지 주소를 입력해주세요." />
         </li>
         <li>
-          <label for="user-name">지점 </label>
+          <label className="parcelLabel" for="user-name">수신자 전화번호 </label>
           <input className="parcelInput" onChange={onChange} value={input.s_phone}
             type="string" placeholder="수신자 전화번호를을 입력해주세요." />
         </li>
         <li>
-          <label for="user-name">지점 </label>
+          <label className="parcelLabel" for="user-name">수신자 이름 </label>
           <input className="parcelInput" onChange={onChange} value={input.s_name}
             type="string" placeholder="수신자 이름을 입력해주세요." />
         </li>
         <li>
-          <label for="user-name">지점 </label>
+          <label className="parcelLabel" for="user-name">수신지 주소/지점번호 </label>
           <input className="parcelInput" onChange={onChange} value={input.s_address}
             type="string" placeholder="수신지 주소/지점번호를 입력해주세요." />
         </li>

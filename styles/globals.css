@@ -7,6 +7,7 @@
     font-family: 'Noto Sans KR', sans-serif;
   }
 }
+
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     width: 15px;
@@ -33,22 +34,32 @@
 }
 
 .parcelbutton {
-  border:1px solid #ccc;
+  border: 1px solid #ccc;
   width: 10%;
   margin: 10px;
 }
 
-.parcelFieldset {  
-  border:1px solid black;
+.parcelFieldset {
+  border: 1px solid black;
   justify-content: center;
-  width: 60%;
+  width: 70%;
   margin: 0 auto;
   padding: 30px;
-  font-weight:bold;  
+  font-weight: bold;
 }
 
-.parcelInput {  
-  border:1px solid #ccc;
+.parcelInput {
+  justify-content: right;
+  float: right;
+  border: 1px solid #ccc;
   width: 70%;
+  margin: 10px;
+}
+
+.parcelLabel {
+  line-height: 50px;
+}
+
+.parcelLi {
   margin: 10px;
 }
