@@ -8,6 +8,11 @@ export default function Parcel() {
   text-align: center;
   justify-content: center;
 }
+.parcelButton {
+  border: 1px solid black;
+  margin-left: 10px;
+  margin-right: 10px;
+}
     `}</style>
       <main className="mx-96">
         <Seo title="택배" />
@@ -19,8 +24,8 @@ export default function Parcel() {
 
         </div>
         <div className="parcelServiceSelect">
-          <button type="button" onClick={() => window.location.href = 'parcel/checkParcel'}>운송장 조회하기</button>
-          <button type="button" onClick={() => window.location.href = 'parcel/orderParcel'}>택배 배송 서비스 이용하기</button>
+          <button className = "parcelButton" type="button" onClick={() => window.location.href = 'parcel/checkParcel'}>운송장 조회하기</button>
+          <button className = "parcelButton" type="button" onClick={() => window.location.href = 'parcel/orderParcel'}>택배 배송 서비스 이용하기</button>
         </div>
       </main>
     </>
