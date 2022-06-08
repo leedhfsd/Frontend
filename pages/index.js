@@ -1,8 +1,11 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"
 import Seo from "../components/Seo";
+import { useRouter } from "next/router";
 export default function Home() {
 
+  const router = useRouter();
+  
   return (
     <div className="mx-96 mt-8">
       <Seo title="Nice To UOS25"/>
