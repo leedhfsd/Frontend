@@ -69,7 +69,7 @@ function Enter() {
     code:""
   })
   const [enter, setEnter] = useState([]);
-  console.log(input);
+  console.log(enter);
 
   const onChange = (event) => {
     setInput({

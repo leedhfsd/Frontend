@@ -1,12 +1,14 @@
 import Link from "next/link";
 import Seo from "../components/Seo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 
 function Profit() {
+  const [result, setResult] = useState([]);
   const [input, setInput] = useState({
-    startDate:"",
-    endDate:"",
-    code:"",
+    startdate:"",
+    enddate:"",
+    profitcode:"",
     branchId:""
   })
   const [enter, setEnter] = useState([]);
@@ -17,18 +19,24 @@ function Profit() {
       [event.target.name]: event.target.value
     })
   };
-  
+  useEffect(() => {
+    (async () => {
+      const response = await (await (fetch("http://localhost:3001/cost/list"))).json();
+      setResult(response);
+    })
+  })
+  console.log(result);
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.branchId === "" || input.code === "" || input.endDate === "" || input.startDate === "") {
+    if (input.branchId === "" || input.profitcode === "" || input.enddate === "" || input.startdate === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
     setEnter([...enter, input]);
     setInput({
-      startDate:"",
-      endDate:"",
-      code:"",
+      startdate:"",
+      enddate:"",
+      profitcode:"",
       branchId:""
     });
   }
@@ -39,17 +47,17 @@ function Profit() {
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/5">
             <label className="">시작 날짜</label>
-            <input name="startDate" onChange={onChange} value={input.startDate}
+            <input name="startdate" onChange={onChange} value={input.startdate}
             type="date" placeholder="YYYY-MM-DD"/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label className="">종료 날짜</label>
-            <input name="endDate" onChange={onChange} value={input.endDate}
+            <input name="enddate" onChange={onChange} value={input.enddate}
             type="date" placeholder="YYYY-MM-DD"/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>수익 코드</label>
-            <input name="code" onChange={onChange} value={input.code}
+            <input name="profitcode" onChange={onChange} value={input.profitcode}
             type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
@@ -83,9 +91,9 @@ function Profit() {
 
 function Spending() {
   const [input, setInput] = useState({
-    startDate:"",
-    endDate:"",
-    code:"",
+    startdate:"",
+    enddate:"",
+    profitcode:"",
     branchId:""
   })
   const [enter, setEnter] = useState([]);
@@ -99,15 +107,15 @@ function Spending() {
   
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.branchId === "" || input.code === "" || input.endDate === "" || input.startDate === "") {
+    if (input.branchId === "" || input.profitcode === "" || input.enddate === "" || input.startdate === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
     setEnter([...enter, input]);
     setInput({
-      startDate:"",
-      endDate:"",
-      code:"",
+      startdate:"",
+      enddate:"",
+      profitcode:"",
       branchId:""
     })
   }
@@ -118,17 +126,17 @@ function Spending() {
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/5">
             <label className="">시작 날짜</label>
-            <input name="startDate" onChange={onChange} value={input.startDate}
+            <input name="startdate" onChange={onChange} value={input.startdate}
             type="date" placeholder="YYYY-MM-DD"/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label className="">종료 날짜</label>
-            <input name="endDate" onChange={onChange} value={input.endDate}
+            <input name="enddate" onChange={onChange} value={input.enddate}
             type="date" placeholder="YYYY-MM-DD"/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지출 코드</label>
-            <input name="code" onChange={onChange} value={input.code}
+            <input name="profitcode" onChange={onChange} value={input.profitcode}
             type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">

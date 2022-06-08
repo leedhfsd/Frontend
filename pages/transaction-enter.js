@@ -1,16 +1,18 @@
 import Link from "next/link";
 import Seo from "../components/Seo";
 import { useState } from "react";
+import axios from "axios";
 
 function Profit() {
 
   const [input, setInput] = useState({
     date:"",
-    code:"",
-    amount:"",
-    branchId:""
+    profitcode:"",
+    profit:"",
+    branch_id:""
   })
   const [enter, setEnter] = useState([]);
+  console.log(enter);
   const [sum, setSum] = useState(0);
   const onChange = (event) => {
     setInput({
@@ -21,19 +23,29 @@ function Profit() {
   
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.amount === "" || input.branchId === "" || input.code === "" || input.date === "") {
+    if (input.profit === "" || input.branch_id === "" || input.profitcode === "" || input.date === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
     setEnter([...enter, input]);
     setInput({
       date:"",
-      code:"",
-      amount:"",
-      branchId:""
+      profitcode:"",
+      profit:"",
+      branch_id:""
     })
-    setSum((current) => current + Number(input.amount));
+    setSum((current) => current + Number(input.profit));
   }
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3001/profit/newprofit',enter[0]).then(
+      res => {
+        console.log(res);
+      }
+    )
+  }
+
 
   return (
     <div>
@@ -46,23 +58,24 @@ function Profit() {
           </div>
           <div className="flex flex-col basis-1/5">
             <label>수익 코드</label>
-            <input name="code" onChange={onChange} value={input.code}
+            <input name="profitcode" onChange={onChange} value={input.profitcode}
             type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>수익 금액</label>
-            <input name="amount" onChange={onChange} value={input.amount}
+            <input name="profit" onChange={onChange} value={input.profit}
             type="number" placeholder="금액을 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지점 번호</label>
-            <input name="branchId" onChange={onChange} value={input.branchId}
+            <input name="branch_id" onChange={onChange} value={input.branch_id}
             type="number" placeholder="지점번호를 입력해주세요."/>
           </div>
           <div>
             <button onClick={handleClick}
             className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">추가</button>
-            <button className="bg-sky-700 text-white rounded-md px-6 h-full">전송</button>
+            <button type="submit" onClick={handleSubmit}
+            className="bg-sky-700 text-white rounded-md px-6 h-full">전송</button>
           </div>
         </form>
       </article>
@@ -79,9 +92,9 @@ function Profit() {
             <tbody key={index}>
               <tr>
                 <td>{item.date}</td>
-                <td>{item.code}</td>
-                <td>{item.amount}</td>
-                <td>{item.branchId}</td>
+                <td>{item.profitcode}</td>
+                <td>{item.profit}</td>
+                <td>{item.branch_id}</td>
               </tr>
             </tbody>
           )}
@@ -97,9 +110,9 @@ function Profit() {
 function Spending() {
   const [input, setInput] = useState({
     date:"",
-    code:"",
-    amount:"",
-    branchId:""
+    profitcode:"",
+    profit:"",
+    branch_id:""
   })
   const [enter, setEnter] = useState([]);
   const [sum, setSum] = useState(0);
@@ -112,18 +125,18 @@ function Spending() {
   
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.amount === "" || input.branchId === "" || input.code === "" || input.date === "") {
+    if (input.profit === "" || input.branch_id === "" || input.profitcode === "" || input.date === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
     setEnter([...enter, input]);
     setInput({
       date:"",
-      code:"",
-      amount:"",
-      branchId:""
+      profitcode:"",
+      profit:"",
+      branch_id:""
     })
-    setSum((current) => current + Number(input.amount));
+    setSum((current) => current + Number(input.profit));
   }
 
   return (
@@ -137,17 +150,17 @@ function Spending() {
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지출 코드</label>
-            <input name="code" onChange={onChange} value={input.code}
+            <input name="profitcode" onChange={onChange} value={input.profitcode}
             type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지출 금액</label>
-            <input name="amount" onChange={onChange} value={input.amount}
+            <input name="profit" onChange={onChange} value={input.profit}
             type="number" placeholder="금액을 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지점 번호</label>
-            <input name="branchId" onChange={onChange} value={input.branchId}
+            <input name="branch_id" onChange={onChange} value={input.branch_id}
             type="number" placeholder="지점번호를 입력해주세요."/>
           </div>
           <div>
@@ -170,9 +183,9 @@ function Spending() {
             <tbody key={index}>
               <tr>
                 <td>{item.date}</td>
-                <td>{item.code}</td>
-                <td>{item.amount}</td>
-                <td>{item.branchId}</td>
+                <td>{item.profitcode}</td>
+                <td>{item.profit}</td>
+                <td>{item.branch_id}</td>
               </tr>
             </tbody>
           )}
