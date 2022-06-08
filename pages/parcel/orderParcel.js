@@ -29,23 +29,55 @@ export default function ParcelService() {
     //   }
     // }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(input);
-        if (input.package_type === "" || input.branch === "" || input.weight === "" || input.b_phone === "" || input.b_name === "" || input.b_address === "" ||
-         input.s_phone === "" || input.s_address === "" || input.s_name === "" || input.commision === "" || input.package_price === "") {
-            alert("모든 칸을 입력해주세요.");
-            return;
-        }
-        alert('test1');
-    }
-
-    const onChange = (e) => {
+    const onChange = async(e) => {
         setInput({
             ...input,
             [e.target.name]: e.target.value
         })
     };
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        console.log(input);
+        if (input.branch === "" || input.weight === "" || input.b_phone === "" || input.b_name === "" || input.b_address === "" ||
+         input.s_phone === "" || input.s_address === "" || input.s_name === "" || input.commision === "" || input.package_price === "" || input.package_type === "") {
+            alert("모든 칸을 입력해주세요.");
+            return;
+        }
+        
+        let submit = {
+            branch: input.branch,
+            weight: input.weight,
+            b_phone: input.b_phone,
+            b_name: input.b_name,
+            b_address: input.b_address,
+            s_phone: input.s_phone,
+            s_address: input.s_address,
+            s_name: input.s_name,
+            commision: input.commision,
+            package_price: input.package_price,
+            package_type: input.package_type
+        }
+
+        const config = {
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify(submit)
+        }
+
+        const res = await fetch(`http://localhost:3001/package`, config)
+
+        if (res.code === 200) {
+            alert('택배 등록에 성공했습니다.')
+        } else if (res.code === 401) {
+            alert('로그인이 필요합니다.');
+        } else {
+            throw new Error()
+        }
+    }
 
     return (
         <>
