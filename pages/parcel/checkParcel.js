@@ -25,6 +25,9 @@ export default function CheckParcel() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(input.branch === "" || input.package_type === "" || input.sortBy === "" || input.limit === "" || input.page === "") {
+      alert("모든 칸을 입력해주세요");
+    }
     console.log(input);
 
     const submit = {
@@ -93,8 +96,26 @@ export default function CheckParcel() {
             </div>
           </form>
         </article>
-        <article>
-          {/* 리스트 출력 공간 구현 필요 */}
+        <article className="my-16 border-2">
+          <div>1건</div>
+          <table className="w-full">
+            <thead align="left" className="border-y-2 border-sky-700">
+              <tr>
+                <th width="10%">일자</th>
+                <th width="10%">지점명</th>
+                <th width="10%">비용</th>
+                <th width="10%">유형</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ex1</td>
+                <td>ex2</td>
+                <td>ex3</td>
+                <td>ex4</td>
+              </tr>
+            </tbody>
+          </table>
         </article>
       </main>
     </div>
