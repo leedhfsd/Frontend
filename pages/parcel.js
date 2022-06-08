@@ -19,7 +19,7 @@ export default function Parcel() {
         <div className="flex flex-row justify-between my-8">
           <div className="flex-col">
             <h1 className="text-2xl font-bold">택배 배송하기</h1>
-            <h1 className="text-xs text-gray-400">고객님은 운송장 조회나 택배 배송 서비스를 이용하실 수 있습니다.</h1>
+            <h1 className="text-xs text-gray-400">고객님은 운송장 조회나 운송장 등록 서비스를 이용하실 수 있습니다.</h1>
           </div>
 
         </div>

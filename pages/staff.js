@@ -178,7 +178,6 @@ function Enter() {
   )
 }
 
-
 export default function TransactionEnter() {
   const [type, setType] = useState("check");
   const onChange = (event) => setType(event.target.value);
