@@ -6,10 +6,10 @@ import axios from "axios";
 function Profit() {
 
   const [input, setInput] = useState({
-    date:"",
-    profitcode:"",
-    profit:"",
-    branch_id:""
+    "date":"",
+    "profit":"",
+    "profitcode":"",
+    "branch_id":""
   })
   const [enter, setEnter] = useState([]);
   console.log(enter);
@@ -29,21 +29,25 @@ function Profit() {
     }
     setEnter([...enter, input]);
     setInput({
-      date:"",
-      profitcode:"",
-      profit:"",
-      branch_id:""
+      "date":"",
+      "profit":"",
+      "profitcode":"",
+      "branch_id":""
     })
     setSum((current) => current + Number(input.profit));
   }
   
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    axios.post('http://localhost:3001/profit/newprofit',enter[0]).then(
-      res => {
-        console.log(res);
+    try {
+      for (let i = 0; i < enter.length; i++){
+        const response = await axios.post(
+          `/profit/newprofit`, enter[i]
+        ).then(alert("서버에 전송완료."));
       }
-    )
+    } catch (err) {
+      console.log(err);
+    }
   }
 
 
@@ -57,14 +61,14 @@ function Profit() {
             type="date" placeholder="YYYY-MM-DD"/>
           </div>
           <div className="flex flex-col basis-1/5">
-            <label>수익 코드</label>
-            <input name="profitcode" onChange={onChange} value={input.profitcode}
-            type="number" placeholder="코드번호를 입력해주세요."/>
-          </div>
-          <div className="flex flex-col basis-1/5">
             <label>수익 금액</label>
             <input name="profit" onChange={onChange} value={input.profit}
             type="number" placeholder="금액을 입력해주세요."/>
+          </div>
+          <div className="flex flex-col basis-1/5">
+            <label>수익 코드</label>
+            <input name="profitcode" onChange={onChange} value={input.profitcode}
+            type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지점 번호</label>
@@ -84,16 +88,16 @@ function Profit() {
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
             <td width="25%">날짜</td>
-            <td width="25%">수익코드</td>
             <td width="25%">금액</td>
+            <td width="25%">수익코드</td>
             <td width="25%">지점번호</td>
           </thead>
           {enter?.map((item, index) => 
             <tbody key={index}>
               <tr>
                 <td>{item.date}</td>
-                <td>{item.profitcode}</td>
                 <td>{item.profit}</td>
+                <td>{item.profitcode}</td>
                 <td>{item.branch_id}</td>
               </tr>
             </tbody>
@@ -149,14 +153,14 @@ function Spending() {
             type="date" placeholder="YYYY-MM-DD"/>
           </div>
           <div className="flex flex-col basis-1/5">
-            <label>지출 코드</label>
-            <input name="profitcode" onChange={onChange} value={input.profitcode}
-            type="number" placeholder="코드번호를 입력해주세요."/>
-          </div>
-          <div className="flex flex-col basis-1/5">
             <label>지출 금액</label>
             <input name="profit" onChange={onChange} value={input.profit}
             type="number" placeholder="금액을 입력해주세요."/>
+          </div>
+          <div className="flex flex-col basis-1/5">
+            <label>지출 코드</label>
+            <input name="profitcode" onChange={onChange} value={input.profitcode}
+            type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지점 번호</label>
@@ -175,16 +179,16 @@ function Spending() {
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
             <td width="25%">날짜</td>
-            <td width="25%">지출코드</td>
             <td width="25%">금액</td>
+            <td width="25%">지출코드</td>
             <td width="25%">지점번호</td>
           </thead>
           {enter?.map((item, index) => 
             <tbody key={index}>
               <tr>
                 <td>{item.date}</td>
-                <td>{item.profitcode}</td>
                 <td>{item.profit}</td>
+                <td>{item.profitcode}</td>
                 <td>{item.branch_id}</td>
               </tr>
             </tbody>

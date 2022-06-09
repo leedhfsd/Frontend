@@ -1,87 +1,60 @@
 import Link from "next/link";
 import Seo from "../components/Seo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
+
 function Check() {
-
-  const [input, setInput] = useState({
-    employee_name:"",
-    employee_phone:"",
-    salary:"",
-    branch_id:""
-  })
-  const [enter, setEnter] = useState([]);
-  console.log(enter);
-
+  const [branch_id, setBranchId] = useState("");
+  const [result, setResult] = useState([]);
   const onChange = (event) => {
-    setInput({
-      ...input,
-      [event.target.name]: event.target.value
-    })
-  };
-  
-  const handleClick = (event) => {
-    event.preventDefault();
-    if (input.salary === "" || input.branch_id === "" || input.employee_name === "" || input.employee_phone === "") {
-      alert("모든 칸을 입력해주세요.");
-      return;
-    }
-    setEnter([...enter, input]);
-    setInput({
-      employee_name:"",
-      employee_phone:"",
-      salary:"",
-      branch_id:""
-    })
+    setBranchId(event.target.value);
   }
-  
+
+  async function handleClick(e) {
+    e.preventDefault();
+    try {
+      const {data} = await axios.get(
+        `/employee/list?branch_id=${branch_id}`
+      );
+      setResult(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div>
-      <article className="border-2 rounded-md">
+      <article className="border-2 rounded-md w-1/4">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/5">
-            <label>이름</label>
-            <input name="employee_name" onChange={onChange} value={input.employee_name}
-            type="text" placeholder="직원 이름을 입력해주세요."/>
-          </div>
-          <div className="flex flex-col basis-1/5">
-            <label>전화번호</label>
-            <input name="employee_phone" onChange={onChange} value={input.employee_phone}
-            type="text" placeholder="직원 번호를 입력해주세요."/>
-          </div>
-          <div className="flex flex-col basis-1/5">
-            <label>급여</label>
-            <input name="salary" onChange={onChange} value={input.salary}
-            type="number" placeholder="금액을 입력해주세요."/>
-          </div>
-          <div className="flex flex-col basis-1/5">
+          <div className="flex flex-col">
             <label>지점 번호</label>
-            <input name="branch_id" onChange={onChange} value={input.branch_id}
-            type="number" placeholder="지점번호를 입력해주세요."/>
+            <input
+            name="branchID" onChange={onChange} value={branch_id}
+            type="number" placeholder="지점 번호를 입력해주세요"/>
           </div>
           <div>
             <button onClick={handleClick}
-            className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">조회</button>
+            className="bg-sky-700 text-white rounded-md px-4 mr-0.5 h-full">조회</button>
           </div>
         </form>
       </article>
       <article className="my-16 border-2">
-        <div>총 {enter.length}건</div>
+        <div>총 {result.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
+            <td width="25%">지점번호</td>
             <td width="25%">이름</td>
             <td width="25%">전화번호</td>
             <td width="25%">급여</td>
-            <td width="25%">지점번호</td>
           </thead>
-          {enter?.map((item, index) => 
+          {result?.map((item, index) => 
             <tbody key={index}>
               <tr>
+                <td>{branch_id}</td>
                 <td>{item.employee_name}</td>
                 <td>{item.employee_phone}</td>
                 <td>{item.salary}</td>
-                <td>{item.branch_id}</td>
               </tr>
             </tbody>
           )}
@@ -119,16 +92,33 @@ function Enter() {
       salary:"",
       branch_id:""
     })
-    setSum((current) => current + Number(input.salary));
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      for (let i = 0; i < enter.length; i++){
+        const response = await axios.post(
+          `/employee/newemployee`, enter[i]
+        ).then(alert("서버에 전송완료."));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  console.log(enter);
   return (
     <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/5">
+            <label>지점 번호</label>
+            <input name="branch_id" onChange={onChange} value={input.branch_id}
+            type="number" placeholder="지점번호를 입력해주세요."/>
+          </div>
+          <div className="flex flex-col basis-1/5">
             <label className="">이름</label>
-            <input name="date" onChange={onChange} value={input.employee_name}
+            <input name="employee_name" onChange={onChange} value={input.employee_name}
             type="text" placeholder="직원 이름을 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
@@ -141,15 +131,11 @@ function Enter() {
             <input name="salary" onChange={onChange} value={input.salary}
             type="number" placeholder="금액을 입력해주세요."/>
           </div>
-          <div className="flex flex-col basis-1/5">
-            <label>지점 번호</label>
-            <input name="branch_id" onChange={onChange} value={input.branch_id}
-            type="number" placeholder="지점번호를 입력해주세요."/>
-          </div>
           <div>
             <button onClick={handleClick}
             className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">추가</button>
-            <button className="bg-sky-700 text-white rounded-md px-6 h-full">전송</button>
+            <button onClick={handleSubmit}
+            className="bg-sky-700 text-white rounded-md px-6 h-full">전송</button>
           </div>
         </form>
       </article>
@@ -157,18 +143,18 @@ function Enter() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
+            <td width="25%">지점번호</td>
             <td width="25%">이름</td>
             <td width="25%">전화번호</td>
             <td width="25%">급여</td>
-            <td width="25%">지점번호</td>
           </thead>
           {enter?.map((item, index) => 
             <tbody key={index}>
               <tr>
+                <td>{item.branch_id}</td>
                 <td>{item.employee_name}</td>
                 <td>{item.employee_phone}</td>
                 <td>{item.salary}</td>
-                <td>{item.branch_id}</td>
               </tr>
             </tbody>
           )}
@@ -179,7 +165,7 @@ function Enter() {
 }
 
 
-export default function TransactionEnter() {
+export default function Staff() {
   const [type, setType] = useState("check");
   const onChange = (event) => setType(event.target.value);
 

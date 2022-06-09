@@ -1,42 +1,83 @@
 import Link from "next/link";
 import Seo from "../components/Seo";
 import { useState } from "react";
+import axios from "axios";
 
 function Check() {
-  
-  const [codeId, setCodeId] = useState("");
-  const [stuffName, setStuffName] = useState("");
+  const [input, setInput] = useState({
+    event_type:"",
+    stuff_name:"",
+    sortBy:"",
+    limit:"",
+    page:"",
+  })
   const [result, setResult] = useState([]);
+  console.log(result);
 
   const onChange = (event) => {
-    setCodeId(event.target.value);
-  }
-  const handleStuff = (event) => {
-    setStuffName(event.target.value);
-  }
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    })
+  };
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    console.log("api 실행하는 부분임");
+  async function handleClick(e) {
+    e.preventDefault();
+    if (input.stuff_name === "" || input.event_type=== "" || input.sortBy === "") {
+      alert("필수 사항을 입력해주세요.");
+      return;
+    }
+    setInput({
+      event_type:"",
+      stuff_name:"",
+      sortBy:"",
+      limit:"",
+      page:"",
+    });
+
+    try {
+      const {data} = await axios.get(
+        `/event/list?event_type=${input.event_type}&stuff_name=${input.stuff_name}&sortBy=${input.sortBy}&limit=${input.limit}&page=${input.page}`
+      );
+      setResult(data);
+    } catch (err) {
+      console.log(err);
+    }
   }
-  
+  console.log(result);
+
   return (
     <div>
-      <article className="border-2 rounded-md w-1/2">
+      <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/3">
+          <div className="flex flex-col basis-1/6">
             <label className="">이벤트 타입</label>
-            <input name="codeId" value={codeId} onChange={onChange} 
-            type="number" placeholder="코드번호를 입력해주세요."/>
+            <input name="event_type" value={input.event_type} onChange={onChange} 
+            type="text" placeholder="이벤트 종류를 입력해주세요."/>
           </div>
-          <div className="flex flex-col basis-1/3">
+          <div className="flex flex-col basis-1/6">
             <label>품목</label>
-            <input name="stuff" value={stuffName} onChange={handleStuff}
+            <input name="stuff_name" value={input.stuff_name} onChange={onChange}
             type="text" placeholder="품목 이름을 입력해주세요."/>
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label>정렬</label>
+            <input name="sortBy" value={input.sortBy} onChange={onChange}
+            type="text" placeholder="asc/dsc 둘 중 하나 입력."/>
+          </div>
+          <div className="flex flex-col w-32">
+            <label>조회 개수</label>
+            <input name="limit" value={input.limit} onChange={onChange}
+            type="number" placeholder="선택사항입니다."/>
+          </div>
+          <div className="flex flex-col w-32">
+            <label>조회 페이지수</label>
+            <input name="page" value={input.page} onChange={onChange}
+            type="number" placeholder="선택사항입니다."/>
           </div>
           <div>
             <button onClick={handleClick}
-            className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">조회</button>
+            className="bg-sky-700 text-white rounded-md px-6 h-full">조회</button>
           </div>
         </form>
       </article>
@@ -44,14 +85,9 @@ function Check() {
         <div>총 {result.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="12.5%">이벤트ID</td>
-            <td width="12.5%">이벤트 코드</td>
-            <td width="12.5%">품목</td>
-            <td width="12.5%">품목 번호</td>
-            <td width="12.5%">할인율</td>
-            <td width="12.5%">할인가</td>
-            <td width="12.5%">시작 날짜</td>
-            <td width="12.5%">종료 날짜</td>
+            <td width="">이벤트 타입</td>
+            <td width="">품목</td>
+            <td width="">정렬</td>
           </thead>
         </table>
       </article>
@@ -61,12 +97,12 @@ function Check() {
 
 function Enter() {
   const [input, setInput] = useState({
-    stuffName:"",
-    price:"",
-    rate:"",
-    startDate:"",
-    endDate:"",
-    code:""
+    stuff_name:"",
+    disprice:"",
+    disrate:"",
+    startdate:"",
+    enddate:"",
+    event_type:""
   })
   const [enter, setEnter] = useState([]);
   console.log(enter);
@@ -80,20 +116,32 @@ function Enter() {
 
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.stuffName === "" || input.startDate=== "" || input.endDate === "" || input.code === "") {
+    if (input.stuff_name === "" || input.startdate=== "" || input.enddate === "") {
       alert("필수 사항을 입력해주세요.");
       return;
     }
     setEnter([...enter, input]);
     setInput({
-      stuffName:"",
-      rate:"",
-      price:"",
-      startDate:"",
-      endDate:"",
-      code:""
+      stuff_name:"",
+      disrate:"",
+      disprice:"",
+      startdate:"",
+      enddate:"",
+      event_type:""
     })
     
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      for (let i = 0; i < enter.length; i++){
+        const response = await axios.post(
+          `/event`, enter[i]
+        ).then(alert("서버에 전송완료."));
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
   
 
@@ -101,40 +149,40 @@ function Enter() {
     <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between w-full">
-          <div className="flex flex-col w-24">
-            <label className="">이벤트 코드</label>
-            <input name="code" value={input.code} onChange={onChange} 
-            type="number" placeholder="코드번호"/>
-          </div>
           <div className="flex flex-col w-32">
             <label className="">품목</label>
-            <input name="stuffName" value={input.stuffName} onChange={onChange} 
+            <input name="stuff_name" value={input.stuff_name} onChange={onChange} 
             type="text" placeholder="품목 이름"/>
           </div>
           <div className="flex flex-col w-32">
-            <label className="">할인율</label>
-            <input name="rate" value={input.rate} onChange={onChange} 
+            <label>할인가</label>
+            <input name="disprice" value={input.disprice} onChange={onChange}
             type="number" placeholder="선택사항입니다."/>
           </div>
           <div className="flex flex-col w-32">
-            <label>할인가</label>
-            <input name="price" value={input.price} onChange={onChange}
+            <label className="">할인율</label>
+            <input name="disrate" value={input.disrate} onChange={onChange} 
             type="number" placeholder="선택사항입니다."/>
           </div>
           <div className="flex flex-col">
             <label className="">이벤트 시작날짜</label>
-            <input name="startDate" value={input.startDate} onChange={onChange} 
+            <input name="startdate" value={input.startdate} onChange={onChange} 
             type="date" placeholder="시작날짜를 입력해주세요."/>
           </div>
           <div className="flex flex-col">
             <label className="">이벤트 종료날짜</label>
-            <input name="endDate" value={input.endDate} onChange={onChange} 
+            <input name="enddate" value={input.enddate} onChange={onChange} 
             type="date" placeholder="종료날짜를 입력해주세요."/>
+          </div>
+          <div className="flex flex-col">
+            <label className="">이벤트 종류</label>
+            <input name="event_type" value={input.event_type} onChange={onChange} 
+            type="text" placeholder="이벤트 타입을 입력해주세요."/>
           </div>
           <div>
             <button onClick={handleClick}
             className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">추가</button>
-            <button onClick={handleClick}
+            <button onClick={handleSubmit}
             className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">전송</button>
           </div>
         </form>
@@ -143,22 +191,22 @@ function Enter() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="12.5%">이벤트 코드</td>
             <td width="12.5%">품목</td>
-            <td width="12.5%">할인율</td>
             <td width="12.5%">할인가</td>
+            <td width="12.5%">할인율</td>
             <td width="12.5%">시작 날짜</td>
             <td width="12.5%">종료 날짜</td>
+            <td width="12.5%">이벤트 타입</td>
           </thead>
           {enter?.map((item, index) => 
             <tbody key={index}>
               <tr>
-                <td>{item.code}</td>
-                <td>{item.stuffName}</td>
-                <td>{item.rate}</td>
-                <td>{item.price}</td>
-                <td>{item.startDate}</td>
-                <td>{item.endDate}</td>
+                <td>{item.stuff_name}</td>
+                <td>{item.disprice}</td>
+                <td>{item.disrate}</td>
+                <td>{item.startdate}</td>
+                <td>{item.enddate}</td>
+                <td>{item.event_type}</td>
               </tr>
             </tbody>
           )}
