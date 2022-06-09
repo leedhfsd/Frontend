@@ -166,7 +166,7 @@ export default function ParcelService() {
                     <li>
                         <label className="parcelLabel" htmlFor="s_address">수신지 주소/지점번호 </label>
                         <input name="s_address" className="parcelInput" onChange={onChange} value={input.s_address}
-                            type="text" placeholder="수신지 주소/지점번호를 입력해주세요." />
+                            type="text" placeholder={input.package_type === "택배" ? "수신지 주소를 입력해주세요." : (input.package_type === "반값택배" ? "지점번호를 입력해주세요." : "먼저 택배 종류를 선택해주세요.")} />
                     </li>
                     <li>
                         <label className="parcelLabel" htmlFor="commision">배송업체 수수료 </label>
@@ -174,7 +174,7 @@ export default function ParcelService() {
                             type="text" placeholder="배송업체 수수료를 입력해주세요." />
                     </li>
                     <li>
-                        <label className="parcelLabel" htmlFor="package_price">택배 배송비/지점번호 </label>
+                        <label className="parcelLabel" htmlFor="package_price">택배 배송비 </label>
                         <input name="package_price" className="parcelInput" onChange={onChange} value={input.package_price}
                             type="text" placeholder="택배 배송비를 입력해주세요." />
                     </li>

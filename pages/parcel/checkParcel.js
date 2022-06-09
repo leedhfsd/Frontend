@@ -11,7 +11,7 @@ export default function CheckParcel() {
   const [input, setInput] = useState({
     branch: "",
     package_type: "",
-    sortBy: "",
+    sortBy: "asc",
     limit: "",
     page: ""
   })
@@ -27,7 +27,7 @@ export default function CheckParcel() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (input.branch === "" || input.package_type === "" || input.sortBy === "" || input.limit === "" || input.page === "") {
+    if (input.branch === "" || input.package_type === "" || input.sortBy === "") {
       alert("모든 칸을 입력해주세요");
     }
     console.log(input);
@@ -38,7 +38,7 @@ export default function CheckParcel() {
       sortBy: input.sortBy,
       limit: input.limit,
       page: input.page
-    }
+    }    
 
     axios.get('http://localhost:3001/package/list', {
       params: JSON.stringify(submit)
@@ -46,8 +46,8 @@ export default function CheckParcel() {
       .then((res) => {
         if (res.code === 200) {
           alert('리스트를 불러왔습니다.')
-          setParcelList(JSON.stringify(res.data));
-        } else if (res.code === 401) {
+          setParcelList(res.data);
+        } else if (res.status === 401) {
           alert('로그인이 필요합니다.');
         } else {
           throw new Error()
@@ -89,7 +89,6 @@ export default function CheckParcel() {
             <div>
               <label htmlFor="type-select" className="px-1">리스트 출력 방식</label>
               <select name="sortBy" value={input.sortBy} onChange={onChange}>
-                <option value="">선택하기</option>
                 <option value="asc">오름차순</option>
                 <option value="desc">내림차순</option>
               </select>
@@ -100,7 +99,7 @@ export default function CheckParcel() {
           </form>
         </article>
         <article className="my-16 border-2">
-          <div>1건</div>
+          <div>{parcelList.length}건이 검색되었습니다.</div>
           <table className="w-full">
             <thead align="left" className="border-y-2 border-sky-700">
               <tr>
@@ -117,7 +116,7 @@ export default function CheckParcel() {
                 <td>ex3</td>
                 <td>ex4</td>
               </tr>
-              {/* {
+              {
                 parcelList.map((element, index) =>
                   <tr>
                     <tb>element.date</tb>
@@ -126,7 +125,7 @@ export default function CheckParcel() {
                     <tb>element.methods</tb>
                   </tr>
                 )
-              } */}
+              }
             </tbody>
           </table>
         </article>
