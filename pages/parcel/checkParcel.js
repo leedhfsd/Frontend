@@ -16,6 +16,8 @@ export default function CheckParcel() {
     page: ""
   })
 
+  const [parcelList, setParcelList] = useState([]);
+
   const onChange = async (e) => {
     setInput({
       ...input,
@@ -25,7 +27,7 @@ export default function CheckParcel() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(input.branch === "" || input.package_type === "" || input.sortBy === "" || input.limit === "" || input.page === "") {
+    if (input.branch === "" || input.package_type === "" || input.sortBy === "" || input.limit === "" || input.page === "") {
       alert("모든 칸을 입력해주세요");
     }
     console.log(input);
@@ -44,6 +46,7 @@ export default function CheckParcel() {
       .then((res) => {
         if (res.code === 200) {
           alert('리스트를 불러왔습니다.')
+          setParcelList(JSON.stringify(res.data));
         } else if (res.code === 401) {
           alert('로그인이 필요합니다.');
         } else {
@@ -65,7 +68,7 @@ export default function CheckParcel() {
             </div>
           </div>
         </article>
-        <article className="border-2 rounded-md w-1/1">
+        <article className="border-2 rounded-md">
           <form className="flex flex-row justify-between">
             <div className="flex flex-col basis-1/5">
               <label>지점 입력</label>
@@ -76,7 +79,7 @@ export default function CheckParcel() {
               <input name="package_type" type="text" value={input.package_type} onChange={onChange} placeholder="택배 종류를 입력해주세요." />
             </div>
             <div className="flex flex-col basis-1/5">
-              <label>Maximum number of users</label>
+              <label>Users</label>
               <input name="limit" type="text" value={input.limit} onChange={onChange} placeholder="선택사항입니다." />
             </div>
             <div className="flex flex-col basis-1/5">
@@ -114,6 +117,16 @@ export default function CheckParcel() {
                 <td>ex3</td>
                 <td>ex4</td>
               </tr>
+              {/* {
+                parcelList.map((element, index) =>
+                  <tr>
+                    <tb>element.date</tb>
+                    <tb>element.loc</tb>
+                    <tb>element.cost</tb>
+                    <tb>element.methods</tb>
+                  </tr>
+                )
+              } */}
             </tbody>
           </table>
         </article>
