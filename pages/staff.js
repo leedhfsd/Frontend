@@ -164,8 +164,12 @@ function Enter() {
   )
 }
 
+<<<<<<< HEAD
 
 export default function Staff() {
+=======
+export default function TransactionEnter() {
+>>>>>>> 0663c4e6b74e19ca73c3bdb4795858dacf335480
   const [type, setType] = useState("check");
   const onChange = (event) => setType(event.target.value);
 
