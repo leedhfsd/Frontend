@@ -71,7 +71,7 @@ export default function Order() {
     axios.get(url)
       .then((res) => {
         if (res.status === 200) {
-          alert('리스트를 불러왔습니다.')
+          alert('발주처리 요청을 성공했습니다.')
           setOrderList(JSON.stringify(res.data));
         } else if (res.status === 401) {
           alert('로그인이 필요합니다.');
@@ -133,7 +133,8 @@ export default function Order() {
 
     axios.post(url, JSON.stringify(submit)).then((res) => {
       if (res.status === 200) {
-        alert('필수발주처리 요청을 성공했습니다.')
+        alert('필수발주처리 요청을 성공했습니다.');
+        setOrder_id(res.data.order_id);
       } else if (res.status === 401) {
         alert('로그인이 필요합니다.');
       } else {
