@@ -25,13 +25,7 @@ function Check() {
       alert("모든 칸을 입력해주세요.");
       return;
     }
-    setInput({
-      branch: "",
-      package_type: "택배",
-      sortBy: "asc",
-      limit: "",
-      page: ""
-    })
+    console.log(input);
 
     try {
       const { data } = await axios.get(
@@ -42,6 +36,14 @@ function Check() {
     } catch (err) {
       console.log(err);
     }
+    
+    setInput({
+      branch: "",
+      package_type: "택배",
+      sortBy: "asc",
+      limit: "",
+      page: ""
+    })
   }
 
   return (
