@@ -39,7 +39,6 @@ function Check() {
     }
   }
   console.log(result);
-  console.log(input);
 
   return (
     <div>

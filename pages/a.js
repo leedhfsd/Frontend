@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Seo from "../../components/Seo";
+import Seo from "../components/Seo";
 import axios from "axios";
 
 export default function ParcelService() {
