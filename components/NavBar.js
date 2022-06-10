@@ -31,6 +31,9 @@ export default function NavBar() {
         <Link href="/transaction-enter">
           <a className={router.pathname === "/transaction-enter" ? "active" : "common"}>입력</a>
         </Link>
+        <Link href="/commute">
+          <a className={router.pathname === "/commute" ? "active" : "common"}>출근/퇴근</a>
+        </Link>
         <style jsx>{`
           .active {
             border-bottom: solid 2px;

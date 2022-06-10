@@ -23,7 +23,7 @@ function Check() {
 
   async function handleClick(e) {
     e.preventDefault();
-    if (input.stuff_name === "" || input.event_type=== "" || input.sortBy === "") {
+    if (input.stuff_name === "" || input.event_type=== "") {
       alert("필수 사항을 입력해주세요.");
       return;
     }
@@ -34,10 +34,11 @@ function Check() {
       limit:"",
       page:"",
     });
+    const url = `/event/list?event_type=${input.event_type.replace(/\+/g,"%2B")}&stuff_name=${input.stuff_name}&sortBy=${input.sortBy}&limit=${input.limit}&page=${input.page}`;
 
     try {
       const {data} = await axios.get(
-        `/event/list?event_type=${input.event_type}&stuff_name=${input.stuff_name}&sortBy=${input.sortBy}&limit=${input.limit}&page=${input.page}`
+        url
       );
       setResult(data);
     } catch (err) {
@@ -63,7 +64,7 @@ function Check() {
           <div className="flex flex-col basis-1/6">
             <label>정렬</label>
             <input name="sortBy" value={input.sortBy} onChange={onChange}
-            type="text" placeholder="asc/dsc 둘 중 하나 입력."/>
+            type="text" placeholder="asc/desc 둘 중 하나 입력."/>
           </div>
           <div className="flex flex-col w-32">
             <label>조회 개수</label>
@@ -85,10 +86,29 @@ function Check() {
         <div>총 {result.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="">이벤트 타입</td>
-            <td width="">품목</td>
-            <td width="">정렬</td>
+            <td width="">이벤트 번호</td>
+            <td width="">이벤트 코드</td>
+            <td width="">물품 번호</td>
+            <td width="">물품</td>
+            <td width="">할인가</td>
+            <td width="">할인율</td>
+            <td width="">시작 날짜</td>
+            <td width="">종료 날짜</td>
           </thead>
+          {result?.map((item, index) => 
+            <tbody key={index}>
+              <tr>
+                <td width="10%">{item.id}</td>
+                <td width="10%">{item.eventcode}</td>
+                <td width="10%">{item.stuff_id}</td>
+                <td width="10%">{item.stuff_name}</td>
+                <td width="10%">{item.disprice}</td>
+                <td width="10%">{item.disrate}</td>
+                <td width="20%">{item.startdate}</td>
+                <td width="20%">{item.enddate}</td>
+              </tr>
+            </tbody>
+          )}
         </table>
       </article>
     </div>

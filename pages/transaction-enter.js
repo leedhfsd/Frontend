@@ -9,7 +9,6 @@ function Profit() {
     "date":"",
     "profit":"",
     "profitcode":"",
-    "branch_id":""
   })
   const [enter, setEnter] = useState([]);
   console.log(enter);
@@ -32,7 +31,6 @@ function Profit() {
       "date":"",
       "profit":"",
       "profitcode":"",
-      "branch_id":""
     })
     setSum((current) => current + Number(input.profit));
   }
@@ -40,16 +38,15 @@ function Profit() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      for (let i = 0; i < enter.length; i++){
-        const response = await axios.post(
-          `/profit/newprofit`, enter[i]
+      const response = await axios.post(
+          `/profit/newprofit`, enter
         ).then(alert("서버에 전송완료."));
-      }
     } catch (err) {
       console.log(err);
     }
   }
 
+  console.log(enter);
 
   return (
     <div>
@@ -70,11 +67,6 @@ function Profit() {
             <input name="profitcode" onChange={onChange} value={input.profitcode}
             type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
-          <div className="flex flex-col basis-1/5">
-            <label>지점 번호</label>
-            <input name="branch_id" onChange={onChange} value={input.branch_id}
-            type="number" placeholder="지점번호를 입력해주세요."/>
-          </div>
           <div>
             <button onClick={handleClick}
             className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">추가</button>
@@ -86,19 +78,17 @@ function Profit() {
       <article className="my-16 border-2">
         <div>총 {enter.length}건</div>
         <table className="w-full">
-          <thead align="" className="border-y-2 border-sky-700">
-            <td width="25%">날짜</td>
+          <thead align="center" className="border-y-2 border-sky-700">
             <td width="25%">금액</td>
-            <td width="25%">수익코드</td>
-            <td width="25%">지점번호</td>
+            <td width="25%">수익 코드</td>
+            <td width="50%">날짜</td>
           </thead>
           {enter?.map((item, index) => 
-            <tbody key={index}>
+            <tbody align="center" key={index}>
               <tr>
-                <td>{item.date}</td>
-                <td>{item.profit}</td>
-                <td>{item.profitcode}</td>
-                <td>{item.branch_id}</td>
+                <td width="25%">{item.profit} 원</td>
+                <td width="25%">{item.profitcode}</td>
+                <td width="50%">{item.date}</td>
               </tr>
             </tbody>
           )}
@@ -111,12 +101,11 @@ function Profit() {
   )
 }
 
-function Spending() {
+function Cost() {
   const [input, setInput] = useState({
-    date:"",
-    profitcode:"",
-    profit:"",
-    branch_id:""
+    time:"",
+    cost_size:"",
+    costcode:"",
   })
   const [enter, setEnter] = useState([]);
   const [sum, setSum] = useState(0);
@@ -129,18 +118,28 @@ function Spending() {
   
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.profit === "" || input.branch_id === "" || input.profitcode === "" || input.date === "") {
+    if (input.time === "" || input.cost_size === "" || input.costcode === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
     setEnter([...enter, input]);
     setInput({
-      date:"",
-      profitcode:"",
-      profit:"",
-      branch_id:""
+      time:"",
+      cost_size:"",
+      costcode:"",
     })
-    setSum((current) => current + Number(input.profit));
+    setSum((current) => current + Number(input.cost_size));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+          `/cost/newcost`, enter
+        ).then(alert("서버에 전송완료."));
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -149,51 +148,45 @@ function Spending() {
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/5">
             <label className="">날짜</label>
-            <input name="date" onChange={onChange} value={input.date}
+            <input name="time" onChange={onChange} value={input.time}
             type="date" placeholder="YYYY-MM-DD"/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지출 금액</label>
-            <input name="profit" onChange={onChange} value={input.profit}
+            <input name="cost_size" onChange={onChange} value={input.cost_size}
             type="number" placeholder="금액을 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지출 코드</label>
-            <input name="profitcode" onChange={onChange} value={input.profitcode}
+            <input name="costcode" onChange={onChange} value={input.costcode}
             type="number" placeholder="코드번호를 입력해주세요."/>
-          </div>
-          <div className="flex flex-col basis-1/5">
-            <label>지점 번호</label>
-            <input name="branch_id" onChange={onChange} value={input.branch_id}
-            type="number" placeholder="지점번호를 입력해주세요."/>
           </div>
           <div>
             <button onClick={handleClick}
             className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">추가</button>
-            <button className="bg-sky-700 text-white rounded-md px-6 h-full">전송</button>
+            <button type="submit" onClick={handleSubmit}
+            className="bg-sky-700 text-white rounded-md px-6 h-full">전송</button>
           </div>
         </form>
       </article>
       <article className="my-16 border-2">
         <div>총 {enter.length}건</div>
         <table className="w-full">
-          <thead align="" className="border-y-2 border-sky-700">
-            <td width="25%">날짜</td>
+          <thead align="center" className="border-y-2 border-sky-700">
             <td width="25%">금액</td>
-            <td width="25%">지출코드</td>
-            <td width="25%">지점번호</td>
+            <td width="25%">지출 코드</td>
+            <td width="50%">날짜</td>
           </thead>
           {enter?.map((item, index) => 
-            <tbody key={index}>
+            <tbody align="center" key={index}>
               <tr>
-                <td>{item.date}</td>
-                <td>{item.profit}</td>
-                <td>{item.profitcode}</td>
-                <td>{item.branch_id}</td>
+                <td width="25%">{item.cost_size} 원</td>
+                <td width="25%">{item.costcode}</td>
+                <td width="50%">{item.time}</td>
               </tr>
             </tbody>
           )}
-          <tr align="left">
+          <tr>
             <td>지출 합계: <span className="text-red-600">{sum} 원</span></td>
           </tr>
         </table>
@@ -232,7 +225,7 @@ export default function TransactionEnter() {
           </div>
         </div>
       </article>
-      {type === "profit" ? <Profit /> : <Spending />}
+      {type === "profit" ? <Profit /> : <Cost />}
     </main>
   </div>
   )

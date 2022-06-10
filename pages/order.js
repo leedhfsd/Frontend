@@ -84,8 +84,6 @@ export default function Order() {
   const deleteOrder = async (e) => {
     e.preventDefault();
     console.log(input);
-
-    if(input.)
   };
 
   const getNecessaryOrder = async (e) => {

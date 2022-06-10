@@ -5,17 +5,16 @@ import axios from "axios";
 
 
 function Check() {
-  const [branch_id, setBranchId] = useState("");
+  const [deleteStaff, setDeleteStaff] = useState("");
   const [result, setResult] = useState([]);
   const onChange = (event) => {
-    setBranchId(event.target.value);
-  }
-
-  async function handleClick(e) {
+    setDeleteStaff(event.target.value);
+  };
+  async function handleCheck(e) {
     e.preventDefault();
     try {
       const {data} = await axios.get(
-        `/employee/list?branch_id=${branch_id}`
+        `/employee/list`
       );
       setResult(data);
     } catch (err) {
@@ -23,27 +22,45 @@ function Check() {
     }
   }
 
+  async function handleDelete(e) {
+    e.preventDefault();
+    try {
+      const res = await axios.delete(
+        `/employee/fire`, {
+          data: {
+            employee_name: deleteStaff
+          }
+        }
+      ).then(alert("삭제를 완료했습니다."));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  console.log(deleteStaff);
+
   return (
     <div>
-      <article className="border-2 rounded-md w-1/4">
-        <form className="flex flex-row justify-between">
-          <div className="flex flex-col">
-            <label>지점 번호</label>
-            <input
-            name="branchID" onChange={onChange} value={branch_id}
-            type="number" placeholder="지점 번호를 입력해주세요"/>
-          </div>
-          <div>
-            <button onClick={handleClick}
-            className="bg-sky-700 text-white rounded-md px-4 mr-0.5 h-full">조회</button>
-          </div>
-        </form>
+      <article className="flex flex-row flex-wrap">
+        <div className="flex border-2 rounded-md w-1/6 items-center justify-between mr-4">
+          <div className="">직원 조회</div>
+          <button onClick={handleCheck}
+            className="bg-sky-700 text-white rounded-md px-4 h-12">조회</button>
+        </div>
+        <div className="flex flex-row border-2 rounded-md w-1/4 items-center justify-between">
+          <form className="flex flex-col">
+            <label className="">직원 이름</label>
+            <input name="deleteStaff" onChange={onChange} value={deleteStaff}
+                type="text" placeholder="삭제할 직원이름을 입력해주세요."/>
+          </form>
+          <button onClick={handleDelete}
+            className="bg-sky-700 text-white rounded-md px-4 h-12">삭제</button>
+        </div>
       </article>
       <article className="my-16 border-2">
         <div>총 {result.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="25%">지점번호</td>
+            <td width="25%">직원 일련번호</td>
             <td width="25%">이름</td>
             <td width="25%">전화번호</td>
             <td width="25%">급여</td>
@@ -51,7 +68,7 @@ function Check() {
           {result?.map((item, index) => 
             <tbody key={index}>
               <tr>
-                <td>{branch_id}</td>
+                <td>{item.employee_id}</td>
                 <td>{item.employee_name}</td>
                 <td>{item.employee_phone}</td>
                 <td>{item.salary}</td>
@@ -69,7 +86,8 @@ function Enter() {
     employee_name:"",
     employee_phone:"",
     salary:"",
-    branch_id:""
+    id:"",
+    pw:""
   })
   const [enter, setEnter] = useState([]);
   const onChange = (event) => {
@@ -81,7 +99,7 @@ function Enter() {
   
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.salary === "" || input.branch_id === "" || input.employee_name === "" || input.employee_phone === "") {
+    if (input.salary === "" || input.id === "" || input.employee_name === "" || input.employee_phone === "" || input.pw === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
@@ -90,7 +108,8 @@ function Enter() {
       employee_name:"",
       employee_phone:"",
       salary:"",
-      branch_id:""
+      id:"",
+      pw:""
     })
   }
 
@@ -111,31 +130,36 @@ function Enter() {
     <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/5">
-            <label>지점 번호</label>
-            <input name="branch_id" onChange={onChange} value={input.branch_id}
-            type="number" placeholder="지점번호를 입력해주세요."/>
-          </div>
-          <div className="flex flex-col basis-1/5">
+          <div className="flex flex-col w-32">
             <label className="">이름</label>
             <input name="employee_name" onChange={onChange} value={input.employee_name}
-            type="text" placeholder="직원 이름을 입력해주세요."/>
+            type="text" placeholder="직원 이름"/>
           </div>
-          <div className="flex flex-col basis-1/5">
+          <div className="flex flex-col basis-1/6">
             <label>전화번호</label>
             <input name="employee_phone" onChange={onChange} value={input.employee_phone}
-            type="text" placeholder="직원 번호를 입력해주세요."/>
+            type="text" placeholder="직원 전화번호"/>
           </div>
-          <div className="flex flex-col basis-1/5">
+          <div className="flex flex-col basis-1/6">
             <label>급여</label>
             <input name="salary" onChange={onChange} value={input.salary}
-            type="number" placeholder="금액을 입력해주세요."/>
+            type="number" placeholder="급여를 입력해주세요."/>
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">직원 계정 ID</label>
+            <input name="id" onChange={onChange} value={input.id}
+            type="text" placeholder="ID를 입력해주세요."/>
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">직원 계정 PW</label>
+            <input name="pw" onChange={onChange} value={input.pw}
+            type="text" placeholder="PW를 입력해주세요."/>
           </div>
           <div>
             <button onClick={handleClick}
-            className="bg-sky-700 text-white rounded-md px-6 mr-0.5 h-full">추가</button>
+            className="bg-sky-700 text-white rounded-md px-4 mr-0.5 h-full">추가</button>
             <button onClick={handleSubmit}
-            className="bg-sky-700 text-white rounded-md px-6 h-full">전송</button>
+            className="bg-sky-700 text-white rounded-md px-4 h-full">전송</button>
           </div>
         </form>
       </article>
@@ -143,18 +167,20 @@ function Enter() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="25%">지점번호</td>
-            <td width="25%">이름</td>
-            <td width="25%">전화번호</td>
-            <td width="25%">급여</td>
+            <td width="20%">이름</td>
+            <td width="20%">전화번호</td>
+            <td width="20%">급여</td>
+            <td width="20%">계정 ID</td>
+            <td width="20%">계정 PW</td>
           </thead>
           {enter?.map((item, index) => 
             <tbody key={index}>
               <tr>
-                <td>{item.branch_id}</td>
                 <td>{item.employee_name}</td>
                 <td>{item.employee_phone}</td>
                 <td>{item.salary}</td>
+                <td>{item.id}</td>
+                <td>{item.pw}</td>
               </tr>
             </tbody>
           )}
@@ -164,18 +190,15 @@ function Enter() {
   )
 }
 
-<<<<<<< HEAD
 
 export default function Staff() {
-=======
-export default function TransactionEnter() {
->>>>>>> 0663c4e6b74e19ca73c3bdb4795858dacf335480
+
   const [type, setType] = useState("check");
   const onChange = (event) => setType(event.target.value);
 
   return (
   <div>
-    <Seo title="입력"/>
+    <Seo title="직원 관리"/>
     <main className="mx-96">
       <article>
         <div className="flex flex-row justify-between my-8">

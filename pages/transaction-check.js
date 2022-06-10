@@ -10,7 +10,7 @@ function Profit() {
     startdate:"",
     enddate:"",
     profitcode:"",
-    branchId:""
+    sumcode:"0"
   })
   const [sum, setSum] = useState(0);
   const onChange = (event) => {
@@ -22,15 +22,14 @@ function Profit() {
 
   async function handleClick(event) {
     event.preventDefault();
-    if (input.branchId === "" || input.profitcode === "" || input.enddate === "" || input.startdate === "") {
+    if (input.sumcode === "" || input.profitcode === "" || input.enddate === "" || input.startdate === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
 
-    //'http://localhost:3001/profit/list?startdate=2022-01-01&enddate=2022-01-01&profitcode=1&branch_id=1'
     try {
       const {data} = await axios.get(
-        `profit/list?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&branch_id=${input.branchId}`
+        `profit/list?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
       );
       setResult(data);
       setSum(()=> data.map(item => item.day_profit).reduce((prev, curr) => prev + curr, 0));
@@ -40,7 +39,7 @@ function Profit() {
 
   }
   console.log(result);
-  console.log(sum);
+
 
   return (
     <div>
@@ -61,11 +60,6 @@ function Profit() {
             <input name="profitcode" onChange={onChange} value={input.profitcode}
             type="number" placeholder="코드번호를 입력해주세요."/>
           </div>
-          <div className="flex flex-col basis-1/5">
-            <label>지점 번호</label>
-            <input name="branchId" onChange={onChange} value={input.branchId}
-            type="number" placeholder="지점번호를 입력해주세요."/>
-          </div>
           <div>
             <button onClick={handleClick}
             className="bg-sky-700 text-white rounded-md px-6 h-full">조회</button>
@@ -75,25 +69,21 @@ function Profit() {
       <article className="my-16 border-2">
         <div>총 {result.length}건</div>
         <table className="w-full">
-          <thead align="" className="border-y-2 border-sky-700">
-            <td width="20%">시작 날짜</td>
-            <td width="20%">종료 날짜</td>
-            <td width="20%">수익 코드</td>
-            <td width="20%">금액</td>
-            <td width="20%">수익 날짜</td>
+          <thead align="center" className="border-y-2 border-sky-700">
+            <td width="25%">금액</td>
+            <td width="25%">수익 코드</td>
+            <td width="50%">수익 날짜</td>
           </thead>
           {result?.map((item, index) => 
-            <tbody key={index}>
+            <tbody align="center" key={index}>
               <tr>
-                <td width="20%">{input.startdate}</td>
-                <td width="20%">{input.enddate}</td>
-                <td width="20%">{input.profitcode}</td>
-                <td width="20%">{item.day_profit}</td>
-                <td width="20%">{item.time}</td>
+                <td width="25%">{item.day_profit} 원</td>
+                <td width="25%">{item.profitcode}</td>
+                <td width="50%">{item.time}</td>
               </tr>
             </tbody>
           )}
-          <tr align="left">
+          <tr align="" className="border-t-2 border-sky-700">
             <td>수익 합계: <span className="text-blue-600">{sum} 원</span></td>
           </tr>
         </table>
@@ -107,8 +97,8 @@ function Spending() {
   const [input, setInput] = useState({
     startdate:"",
     enddate:"",
-    profitcode:"",
-    branchId:""
+    costcode:"",
+    sumcode:"0"
   })
   const [sum, setSum] = useState(0);
   const onChange = (event) => {
@@ -120,16 +110,16 @@ function Spending() {
 
   async function handleClick(event) {
     event.preventDefault();
-    if (input.branchId === "" || input.profitcode === "" || input.enddate === "" || input.startdate === "") {
+    if (input.sumcode === "" || input.costcode === "" || input.enddate === "" || input.startdate === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
     try {
       const {data} = await axios.get(
-        `cost/list?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&branch_id=${input.branchId}`
+        `cost/list?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
       );
       setResult(data);
-      setSum(()=> data.map(item => item.day_profit).reduce((prev, curr) => prev + curr, 0));
+      setSum(()=> data.map(item => item.cost_size).reduce((prev, curr) => prev + curr, 0));
     } catch (err) {
       console.log(err);
     }
@@ -154,13 +144,8 @@ function Spending() {
           </div>
           <div className="flex flex-col basis-1/5">
             <label>지출 코드</label>
-            <input name="profitcode" onChange={onChange} value={input.profitcode}
+            <input name="costcode" onChange={onChange} value={input.costcode}
             type="number" placeholder="코드번호를 입력해주세요."/>
-          </div>
-          <div className="flex flex-col basis-1/5">
-            <label>지점 번호</label>
-            <input name="branchId" onChange={onChange} value={input.branchId}
-            type="number" placeholder="지점번호를 입력해주세요."/>
           </div>
           <div>
             <button onClick={handleClick}
@@ -171,25 +156,21 @@ function Spending() {
       <article className="my-16 border-2">
         <div>총 {result.length}건</div>
         <table className="w-full">
-          <thead align="" className="border-y-2 border-sky-700">
-            <td width="20%">시작 날짜</td>
-            <td width="20%">종료 날짜</td>
-            <td width="20%">지출 코드</td>
-            <td width="20%">금액</td>
-            <td width="20%">수익 날짜</td>
+          <thead align="center" className="border-y-2 border-sky-700">
+            <td width="25%">금액</td>
+            <td width="25%">지출 코드</td>
+            <td width="50%">지출 날짜</td>
           </thead>
           {result?.map((item, index) => 
-            <tbody key={index}>
+            <tbody align="center" key={index}>
               <tr>
-                <td width="20%">{input.startdate}</td>
-                <td width="20%">{input.enddate}</td>
-                <td width="20%">{input.profitcode}</td>
-                <td width="20%">{item.day_profit}</td>
-                <td width="20%">{item.time}</td>
+                <td width="25%">{item.cost_size} 원</td>
+                <td width="25%">{item.costcode}</td>
+                <td width="50%">{item.time}</td>
               </tr>
             </tbody>
           )}
-          <tr align="left">
+          <tr align="left" className="border-t-2 border-sky-700">
             <td>지출 합계: <span className="text-red-600">{sum} 원</span></td>
           </tr>
         </table>
