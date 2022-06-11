@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Seo from "../components/Seo";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 function Enter() {
   const [input, setInput] = useState({
@@ -44,7 +45,7 @@ function Enter() {
     console.log(JSON.stringify(enter));
 
     try {
-      const res = await axios.post(`/stuff/newitem`, enter).then(alert("물품을 추가했습니다"));
+      const res = await axios.post(`http://localhost:3001/stuff/newitem`, enter).then(alert("물품을 추가했습니다"));
       console.log("result: ", res.data);
       setEnter([]);
     } catch (err) {
@@ -142,10 +143,10 @@ function Check() {
     console.log("input: ", input);
 
     try {
-      const { data } = await axios.get(
-        `/stuff`, JSON.stringify(input)
+      const res = await axios.get(
+        `http://localhost:3001/stuff`, input
       );
-      setResult(data);
+      setResult(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -156,7 +157,7 @@ function Check() {
 
     try {
       const res = await axios.delete(
-        `/stuff/ditem`, {
+        `http://localhost:3001/stuff/ditem`, {
         data: {
           stuff_id: id
         }
@@ -166,7 +167,7 @@ function Check() {
       alert("삭제되었습니다.");
 
       const { data } = await axios.get(
-        `/stuff`, JSON.stringify(input)
+        `http://localhost:3001/stuff`, JSON.stringify(input)
       );
       setResult(data);
       console.log(data);
@@ -219,7 +220,7 @@ function Check() {
               <td width="9%">자동발주 실시 재고량</td>
               <td width="9%">생성일</td>
               <td width="9%">수정일</td>
-              <td width="4%">test</td>
+              <td width="4%">삭제</td>
             </tr>
           </thead>
           <tbody>
@@ -283,7 +284,7 @@ function Revise() {
     console.log(JSON.stringify(enter));
 
     try {
-      const res = await axios.put(`/stuff/uitem`, enter).then(alert("물품정보를 업데이트했습니다"));
+      const res = await axios.put(`http://localhost:3001/stuff/uitem`, enter).then(alert("물품정보를 업데이트했습니다"));
       console.log("result: ", res.data);
       setResult(data);
     } catch (err) {

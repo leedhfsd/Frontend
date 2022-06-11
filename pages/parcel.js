@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Seo from "../components/Seo";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 function Check() {
   const [input, setInput] = useState({
@@ -21,17 +22,15 @@ function Check() {
 
   async function handleClick(e) {
     e.preventDefault();
-    if (input.branch === "" || input.package_type === "" || input.sortBy === "") {
-      alert("모든 칸을 입력해주세요.");
-      return;
-    }
+    setResult([]);
+    
     console.log(input);
 
     try {
       const { data } = await axios.get(
-        `/package/list`, input
+        `http://localhost:3001/package`, input
       );
-      console.log(data);
+      console.log("test: ", data);
       setResult(data);
     } catch (err) {
       console.log(err);
@@ -53,7 +52,7 @@ function Check() {
           <div className="flex flex-col basis-1/3">
             <label className="">지점</label>
             <input name="branch" value={input.branch} onChange={onChange}
-              type="text" placeholder="지점 이름을 입력해주세요." />
+              type="text" placeholder="선택사항입니다." />
           </div>
           <div className="flex flex-col basis-1/3">
             <label className="">택배 종류</label>
@@ -129,7 +128,7 @@ function Enter() {
     console.log(JSON.stringify(input));
 
     try {
-      const res = await axios.post(`/package`, input).then(alert("운송장 정보를 기록했습니다"));
+      const res = await axios.post(`http://localhost:3001/package`, input).then(alert("운송장 정보를 기록했습니다"));
       console.log("result: ", res.data);
       alert("...");
     } catch (err) {
@@ -185,11 +184,11 @@ function Enter() {
               <option value="반값택배">반값택배</option>
             </select>
             <input name="weight" value={input.weight} onChange={onChange}
-              type="text" placeholder="택배 무게(kg)" />
+              type="number" placeholder="택배 무게(kg)" />
             <input name="commision" value={input.commision} onChange={onChange}
-              type="text" placeholder="업체 수수료" />
+              type="number" placeholder="업체 수수료" />
             <input name="package_price" value={input.package_price} onChange={onChange}
-              type="text" placeholder="배송비" />
+              type="number" placeholder="배송비" />
           </div>
           <div>
             <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md px-6 h-full">추가</button>

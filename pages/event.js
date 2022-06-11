@@ -2,7 +2,7 @@ import Link from "next/link";
 import Seo from "../components/Seo";
 import { useState } from "react";
 import axios from "axios";
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true;
 
 function Check() {
   const [input, setInput] = useState({
