@@ -9,6 +9,7 @@ function Check() {
     endd:""
   })
   const [result, setResult] = useState([]);
+  const [test, setTest] = useState([]);
   console.log(result);
 
   const onChange = (event) => {
@@ -20,7 +21,7 @@ function Check() {
 
   async function handleClick(e) {
     e.preventDefault();
-    if (input.stard === "" || input.endd === "") {
+    if (input.startd === "" || input.endd === "") {
       alert("필수 사항을 입력해주세요.");
       return;
     }
@@ -47,7 +48,7 @@ function Check() {
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/6">
             <label className="">출근 시각</label>
-            <input name="stard" value={input.stard} onChange={onChange} 
+            <input name="startd" value={input.startd} onChange={onChange} 
             type="date" placeholder="출근 시각을 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/6">
@@ -69,7 +70,7 @@ function Check() {
             <td width="33%">출근 시각</td>
             <td width="33%">퇴근 시각</td>
           </thead>
-          {result?.map((item, index) => 
+          {test?.map((item, index) => 
             <tbody key={index}>
               <tr>
                 <td width="33%">{item.employee_id}</td>
