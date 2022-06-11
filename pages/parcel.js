@@ -6,7 +6,7 @@ axios.defaults.withCredentials = true;
 function Check() {
   const [input, setInput] = useState({
     branch: "",
-    package_type: "택배",
+    package_type: "",
     sortBy: "asc",
     limit: "",
     page: ""
@@ -20,15 +20,6 @@ function Check() {
     })
   };
 
-  // function filter(branch, package_type, sortBy) {
-  //   console.log("filter");
-  //   for(let i = 0; i < result.length; i++) {
-  //     if ((branch === "" || (result[i].branch === branch))) {
-  //       console.log((package_type === "반값택배" && result[i].pakage_type === 2) || (package_type === "택배" && result[i].pakage_type === 1))
-  //     }
-  //   }
-  // }
-
   async function handleClick(e) {
     e.preventDefault();
     setResult([]);
@@ -37,16 +28,16 @@ function Check() {
 
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/package`, JSON.stringify(input)
+        `http://localhost:3001/package`, input
       );
       setResult(data);
-      console.log("result: ", result[1]);
+      if (input.package_type !== "") {
+        setResult(result.filter((item, index)=> (input.package_type === "택배" ? (item.pakage_type !== 2) : (item.pakage_type !== 1))));
+      }
+      console.log("result: ", result);
     } catch (err) {
       console.log(err);
     }
-
-    // filter(input.branch, input.package_type, input.sortBy);
-    
   }
 
   return (
@@ -61,6 +52,7 @@ function Check() {
           <div className="flex flex-col basis-1/3">
             <label className="">택배 종류</label>
             <select name="package_type" value={input.package_type} onChange={onChange}>
+              <option value="">선택하기</option>
               <option value="택배">택배</option>
               <option value="반값택배">반값택배</option>
             </select>
