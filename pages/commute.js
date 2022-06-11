@@ -3,9 +3,11 @@ import Seo from "../components/Seo";
 import { useState } from "react";
 import axios from "axios";
 
+axios.defaults.withCredentials = true
+
 function Check() {
   const [input, setInput] = useState({
-    stard:"",
+    startd:"",
     endd:""
   })
   const [result, setResult] = useState([]);
@@ -20,18 +22,18 @@ function Check() {
 
   async function handleClick(e) {
     e.preventDefault();
-    if (input.stard === "" || input.endd === "") {
+    if (input.startd === "" || input.endd === "") {
       alert("필수 사항을 입력해주세요.");
       return;
     }
     setInput({
-      stard:"",
+      startd:"",
       endd:""
     });
 
     try {
       const {data} = await axios.get(
-        `/commute/list?startd=${input.stard}&endd=${input.endd}`, input
+        `http://localhost:3001/commute?startd=${input.startd}&endd=${input.endd}`
       );
       setResult(data);
     } catch (err) {
@@ -46,7 +48,7 @@ function Check() {
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/6">
             <label className="">출근 시각</label>
-            <input name="stard" value={input.stard} onChange={onChange} 
+            <input name="startd" value={input.startd} onChange={onChange} 
             type="date" placeholder="출근 시각을 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/6">
@@ -73,7 +75,7 @@ function Check() {
               <tr>
                 <td width="33%">{item.employee_id}</td>
                 <td width="33%">{item.commute_start}</td>
-                <td width="3%">{item.commute_end}</td>
+                <td width="33%">{item.commute_end}</td>
               </tr>
             </tbody>
           )}
@@ -116,7 +118,7 @@ function Enter() {
     try {
       for (let i = 0; i < enter.length; i++){
         const response = await axios.post(
-          `/commute/commute`, enter[i]
+          `http://localhost:3001/commute`, enter[i]
         ).then(alert("서버에 전송완료."));
       }
     } catch (err) {

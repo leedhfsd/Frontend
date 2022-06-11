@@ -2,6 +2,7 @@ import Link from "next/link";
 import Seo from "../components/Seo";
 import { useState } from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true
 
 function Profit() {
 
@@ -39,7 +40,7 @@ function Profit() {
     e.preventDefault();
     try {
       const response = await axios.post(
-          `/profit/newprofit`, enter
+          `http://localhost:3001/profit`, enter
         ).then(alert("서버에 전송완료."));
     } catch (err) {
       console.log(err);
@@ -135,7 +136,7 @@ function Cost() {
     e.preventDefault();
     try {
       const response = await axios.post(
-          `/cost/newcost`, enter
+          `http://localhost:3001/cost`, enter
         ).then(alert("서버에 전송완료."));
     } catch (err) {
       console.log(err);

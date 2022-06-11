@@ -2,6 +2,7 @@ import Link from "next/link";
 import Seo from "../components/Seo";
 import { useState, useEffect } from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true
 
 
 function Profit() {
@@ -29,7 +30,7 @@ function Profit() {
 
     try {
       const {data} = await axios.get(
-        `profit/list?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
+        `http://localhost:3001/profit/?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
       );
       setResult(data);
       setSum(()=> data.map(item => item.day_profit).reduce((prev, curr) => prev + curr, 0));
@@ -116,7 +117,7 @@ function Spending() {
     }
     try {
       const {data} = await axios.get(
-        `cost/list?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
+        `http://localhost:3001/cost/?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
       );
       setResult(data);
       setSum(()=> data.map(item => item.cost_size).reduce((prev, curr) => prev + curr, 0));

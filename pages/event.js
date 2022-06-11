@@ -2,6 +2,7 @@ import Link from "next/link";
 import Seo from "../components/Seo";
 import { useState } from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true
 
 function Check() {
   const [input, setInput] = useState({
@@ -12,7 +13,7 @@ function Check() {
     page:"",
   })
   const [result, setResult] = useState([]);
-  console.log(result);
+  const [eventId, setEventId] = useState("");
 
   const onChange = (event) => {
     setInput({
@@ -20,6 +21,10 @@ function Check() {
       [event.target.name]: event.target.value
     })
   };
+
+  const onChangeDelete = (event) => {
+    setEventId(event.target.value);
+  }
 
   async function handleClick(e) {
     e.preventDefault();
@@ -34,13 +39,28 @@ function Check() {
       limit:"",
       page:"",
     });
-    const url = `/event/list?event_type=${input.event_type.replace(/\+/g,"%2B")}&stuff_name=${input.stuff_name}&sortBy=${input.sortBy}&limit=${input.limit}&page=${input.page}`;
+    const url = `http://localhost:3001/event?event_type=${input.event_type.replace(/\+/g,"%2B")}&stuff_name=${input.stuff_name}&sortBy=${input.sortBy}&limit=${input.limit}&page=${input.page}`;
 
     try {
       const {data} = await axios.get(
         url
       );
       setResult(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleDelete(e) {
+    e.preventDefault();
+    try {
+      const res = await axios.delete(
+        `http://localhost:3001/event?event_id=${eventId}`, {
+          data: {
+            event_id: eventId
+          }
+        }
+      ).then(alert("삭제를 완료했습니다."));
     } catch (err) {
       console.log(err);
     }
@@ -79,6 +99,19 @@ function Check() {
           <div>
             <button onClick={handleClick}
             className="bg-sky-700 text-white rounded-md px-6 h-full">조회</button>
+          </div>
+        </form>
+      </article>
+      <article>
+        <form className="flex flex-row mt-4 border-2 rounded-md w-fit">
+          <div className="flex flex-col">
+            <label>이벤트 번호</label>
+            <input name="eventId" value={eventId} onChange={onChangeDelete}
+            type="number" placeholder="삭제할 이벤트 번호 입력."/>
+          </div>
+          <div>
+            <button onClick={handleDelete}
+            className="bg-sky-700 text-white rounded-md px-6 h-full">삭제</button>
           </div>
         </form>
       </article>
@@ -156,7 +189,7 @@ function Enter() {
     try {
       for (let i = 0; i < enter.length; i++){
         const response = await axios.post(
-          `/event`, enter[i]
+          `http://localhost:3001/event`, enter[i]
         ).then(alert("서버에 전송완료."));
       }
     } catch (err) {

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Seo from "../components/Seo";
 import { useState, useEffect } from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true
 
 
 function Check() {
@@ -14,7 +15,7 @@ function Check() {
     e.preventDefault();
     try {
       const {data} = await axios.get(
-        `/employee/list`
+        `http://localhost:3001/employee`
       );
       setResult(data);
     } catch (err) {
@@ -26,7 +27,7 @@ function Check() {
     e.preventDefault();
     try {
       const res = await axios.delete(
-        `/employee/fire`, {
+        `http://localhost:3001/employee`, {
           data: {
             employee_name: deleteStaff
           }
@@ -118,7 +119,7 @@ function Enter() {
     try {
       for (let i = 0; i < enter.length; i++){
         const response = await axios.post(
-          `/employee/newemployee`, enter[i]
+          `http://localhost:3001/employee`, enter[i]
         ).then(alert("서버에 전송완료."));
       }
     } catch (err) {
