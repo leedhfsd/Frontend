@@ -4,13 +4,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 axios.defaults.withCredentials = true
 
-
 function Check() {
   const [deleteStaff, setDeleteStaff] = useState("");
+  const [salary, setSalary] = useState("");
   const [result, setResult] = useState([]);
-  const onChange = (event) => {
+
+  const onChangeName = (event) => {
     setDeleteStaff(event.target.value);
   };
+  const onChangeSalary = (event) => {
+    setSalary(event.target.value);
+  }
   async function handleCheck(e) {
     e.preventDefault();
     try {
@@ -37,7 +41,25 @@ function Check() {
       console.log(err);
     }
   }
+
+  async function handlePatch(e) {
+    e.preventDefault();
+    try {
+      const response = await axios.patch(
+        `http://localhost:3001/employee/salary`, {
+          data: {
+            employee_name: deleteStaff,
+            salary: salary
+          }
+        }
+      ).then(alert("급여 변경을 완료했습니다."));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   console.log(deleteStaff);
+  console.log(salary);
 
   return (
     <div>
@@ -47,24 +69,35 @@ function Check() {
           <button onClick={handleCheck}
             className="bg-sky-700 text-white rounded-md px-4 h-12">조회</button>
         </div>
-        <div className="flex flex-row border-2 rounded-md w-1/4 items-center justify-between">
-          <form className="flex flex-col">
-            <label className="">직원 이름</label>
-            <input name="deleteStaff" onChange={onChange} value={deleteStaff}
-                type="text" placeholder="삭제할 직원이름을 입력해주세요."/>
+        <div className="flex flex-row border-2 rounded-md items-center justify-between">
+          <form className="flex flex-row">
+            <div className="flex flex-col mr-4">
+              <label className="">직원 이름</label>
+              <input name="deleteStaff" onChange={onChangeName} value={deleteStaff}
+                  type="text" placeholder="삭제할 직원이름을 입력해주세요."/>
+            </div>
+            <div className="flex flex-col">
+              <label className="">변경 급여</label>
+              <input name="salary" onChange={onChangeSalary} value={salary}
+                  type="text" placeholder="직원 삭제시 입력X"/>
+            </div>
           </form>
           <button onClick={handleDelete}
-            className="bg-sky-700 text-white rounded-md px-4 h-12">삭제</button>
+            className="bg-sky-700 text-white rounded-md px-4 mr-1 h-12">삭제</button>
+          <button onClick={handlePatch}
+            className="bg-sky-700 text-white rounded-md px-4 h-12">급여 변경</button>
         </div>
       </article>
       <article className="my-16 border-2">
         <div>총 {result.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="25%">직원 일련번호</td>
-            <td width="25%">이름</td>
-            <td width="25%">전화번호</td>
-            <td width="25%">급여</td>
+            <tr>
+              <td width="25%">직원 일련번호</td>
+              <td width="25%">이름</td>
+              <td width="25%">전화번호</td>
+              <td width="25%">급여</td>
+            </tr>
           </thead>
           {result?.map((item, index) => 
             <tbody key={index}>
@@ -168,11 +201,13 @@ function Enter() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="20%">이름</td>
-            <td width="20%">전화번호</td>
-            <td width="20%">급여</td>
-            <td width="20%">계정 ID</td>
-            <td width="20%">계정 PW</td>
+            <tr>
+              <td width="20%">이름</td>
+              <td width="20%">전화번호</td>
+              <td width="20%">급여</td>
+              <td width="20%">계정 ID</td>
+              <td width="20%">계정 PW</td>
+            </tr>
           </thead>
           {enter?.map((item, index) => 
             <tbody key={index}>
@@ -190,7 +225,6 @@ function Enter() {
     </div>
   )
 }
-
 
 export default function Staff() {
 
@@ -221,3 +255,4 @@ export default function Staff() {
   </div>
   )
 }
+

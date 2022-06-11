@@ -80,9 +80,11 @@ function Profit() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="center" className="border-y-2 border-sky-700">
-            <td width="25%">금액</td>
-            <td width="25%">수익 코드</td>
-            <td width="50%">날짜</td>
+            <tr>
+              <td width="25%">금액</td>
+              <td width="25%">수익 코드</td>
+              <td width="50%">날짜</td>
+            </tr>
           </thead>
           {enter?.map((item, index) => 
             <tbody align="center" key={index}>
@@ -93,9 +95,11 @@ function Profit() {
               </tr>
             </tbody>
           )}
-          <tr align="left">
-            <td>수익 합계: <span className="text-blue-600">{sum} 원</span></td>
-          </tr>
+          <tfoot>
+            <tr align="left">
+              <td>수익 합계: <span className="text-blue-600">{sum} 원</span></td>
+            </tr>
+          </tfoot>
         </table>
       </article>
     </div>
@@ -174,9 +178,11 @@ function Cost() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="center" className="border-y-2 border-sky-700">
-            <td width="25%">금액</td>
-            <td width="25%">지출 코드</td>
-            <td width="50%">날짜</td>
+            <tr>
+              <td width="25%">금액</td>
+              <td width="25%">지출 코드</td>
+              <td width="50%">날짜</td>
+            </tr>
           </thead>
           {enter?.map((item, index) => 
             <tbody align="center" key={index}>
@@ -187,9 +193,11 @@ function Cost() {
               </tr>
             </tbody>
           )}
-          <tr>
-            <td>지출 합계: <span className="text-red-600">{sum} 원</span></td>
-          </tr>
+          <tfoot>
+            <tr>
+              <td>지출 합계: <span className="text-red-600">{sum} 원</span></td>
+            </tr>
+          </tfoot>
         </table>
       </article>
     </div>

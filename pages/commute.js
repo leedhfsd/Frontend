@@ -66,9 +66,11 @@ function Check() {
         <div>총 {result.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="33%">직원 일련번호</td>
-            <td width="33%">출근 시각</td>
-            <td width="33%">퇴근 시각</td>
+            <tr>
+              <td width="33%">직원 일련번호</td>
+              <td width="33%">출근 시각</td>
+              <td width="33%">퇴근 시각</td>
+            </tr>
           </thead>
           {result?.map((item, index) => 
             <tbody key={index}>
@@ -155,8 +157,10 @@ function Enter() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="center" className="border-y-2 border-sky-700">
-            <td width="40%">출근 시각</td>
-            <td width="40%">퇴근 시각</td>
+            <tr>
+              <td width="40%">출근 시각</td>
+              <td width="40%">퇴근 시각</td>
+            </tr>
           </thead>
           {enter?.map((item, index) => 
             <tbody align="center" key={index}>

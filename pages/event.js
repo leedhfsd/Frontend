@@ -119,14 +119,16 @@ function Check() {
         <div>총 {result.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="">이벤트 번호</td>
-            <td width="">이벤트 코드</td>
-            <td width="">물품 번호</td>
-            <td width="">물품</td>
-            <td width="">할인가</td>
-            <td width="">할인율</td>
-            <td width="">시작 날짜</td>
-            <td width="">종료 날짜</td>
+            <tr>
+              <td width="">이벤트 번호</td>
+              <td width="">이벤트 코드</td>
+              <td width="">물품 번호</td>
+              <td width="">물품</td>
+              <td width="">할인가</td>
+              <td width="">할인율</td>
+              <td width="">시작 날짜</td>
+              <td width="">종료 날짜</td>
+            </tr>
           </thead>
           {result?.map((item, index) => 
             <tbody key={index}>
@@ -244,12 +246,14 @@ function Enter() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
-            <td width="12.5%">품목</td>
-            <td width="12.5%">할인가</td>
-            <td width="12.5%">할인율</td>
-            <td width="12.5%">시작 날짜</td>
-            <td width="12.5%">종료 날짜</td>
-            <td width="12.5%">이벤트 타입</td>
+            <tr>
+              <td width="12.5%">품목</td>
+              <td width="12.5%">할인가</td>
+              <td width="12.5%">할인율</td>
+              <td width="12.5%">시작 날짜</td>
+              <td width="12.5%">종료 날짜</td>
+              <td width="12.5%">이벤트 타입</td>
+            </tr>
           </thead>
           {enter?.map((item, index) => 
             <tbody key={index}>
