@@ -47,12 +47,12 @@ function Check() {
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/6">
-            <label className="">출근 시각</label>
+            <label className="">시작 날짜</label>
             <input name="startd" value={input.startd} onChange={onChange} 
             type="date" placeholder="출근 시각을 입력해주세요."/>
           </div>
           <div className="flex flex-col basis-1/6">
-            <label>퇴근 날짜</label>
+            <label>종료 날짜</label>
             <input name="endd" value={input.endd} onChange={onChange}
             type="date" placeholder="퇴근 시각을 입력해주세요."/>
           </div>
