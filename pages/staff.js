@@ -69,10 +69,10 @@ function Check() {
             <div className="flex flex-col mr-4">
               <label className="">직원 이름</label>
               <input name="deleteStaff" onChange={onChangeName} value={deleteStaff}
-                  type="text" placeholder="삭제할 직원이름을 입력해주세요."/>
+                  type="text" placeholder="삭제/ 급여를 변경할 직원이름을 입력해주세요."/>
             </div>
             <div className="flex flex-col">
-              <label className="">변경 급여</label>
+              <label className="">급여 변경</label>
               <input name="salary" onChange={onChangeSalary} value={salary}
                   type="text" placeholder="직원 삭제시 입력X"/>
             </div>
