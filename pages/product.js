@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Seo from "../components/Seo";
 import axios from "axios";
+import { string } from "nunjucks/src/filters";
 axios.defaults.withCredentials = true;
 
 function Enter() {
@@ -142,14 +143,27 @@ function Check() {
     setResult([]);
     console.log("input: ", input);
 
-    try {
-      const res = await axios.get(
-        `http://localhost:3001/stuff`, input
-      );
-      setResult(res.data);
-    } catch (err) {
-      console.log(err);
+    const res = await axios.get(
+      `http://localhost:3001/stuff`, input
+    );
+
+    let a;
+
+    if(input.stuff_name !== "") {
+      // setResult(res.data.filter((item, index) => (input.stuff_name === item.stuff_name)));
+      a = res.data.filter((item, index) => (input.stuff_name === item.stuff_name));
+    } else {
+      a = res.data;
     }
+    if (input.stuff_id !== "") {
+      // setResult(res.data.filter((item, index) => (input.stuff_id === string(item.stuff_id))));
+      a = a.filter((item, index) => (input.stuff_id === string(item.stuff_id)));
+    }
+    if (input.stuffcode !== "") {
+      // setResult(res.data.filter((item, index) => (input.stuffcode === string(item.stuffcode))));
+      a = a.filter((item, index) => (input.stuffcode === string(item.stuffcode)));
+    }
+    setResult(a);
   }
 
   async function deleteStuff(e, id) {
