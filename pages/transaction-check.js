@@ -115,9 +115,10 @@ function Spending() {
       alert("모든 칸을 입력해주세요.");
       return;
     }
+    const url = `http://localhost:3001/cost/?startdate=${input.startdate}&enddate=${input.enddate}&costcode=${input.costcode}&sumcode=${input.sumcode}`
     try {
       const {data} = await axios.get(
-        `http://localhost:3001/cost/?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
+        url
       );
       setResult(data);
       setSum(()=> data.map(item => item.cost).reduce((prev, curr) => prev + curr, 0));
@@ -125,7 +126,8 @@ function Spending() {
       console.log(err);
     }
   }
-
+  console.log(input);
+  console.log(result);
   return (
     <div>
       <article className="border-2 rounded-md">

@@ -108,6 +108,8 @@ function Cost() {
     time:"",
     cost_size:"",
     costcode:"",
+    stock_id:"",
+    stock_num:""
   })
   const [enter, setEnter] = useState([]);
   const [sum, setSum] = useState(0);
@@ -129,6 +131,8 @@ function Cost() {
       time:"",
       cost_size:"",
       costcode:"",
+      stock_id:"",
+      stock_num:""
     })
     setSum((current) => current + Number(input.cost_size));
   }
@@ -146,22 +150,40 @@ function Cost() {
 
   return (
     <div>
+      <article>
+        <div className="mb-4">
+          <h1 className="font-bold text-red-500">지출 내역 작성 요령</h1>
+          <h1 className="text-xs">일반적인 지출은 날짜, 지출 금액, 지출 코드만 입력한다.</h1>
+          <h1 className="text-xs"><span className="text-blue-700 font-bold">환불 처리</span>를 위한 지출 코드는 6번으로 물품 일련번호와 개수까지 모두 입력해야 한다.</h1>
+          <h1 className="text-xs"><span className="text-blue-700 font-bold">폐기 금액 처리</span>를 위한 지출 코드는 7번으로 물품 일련번호를 입력해야한다.</h1>
+        </div>
+      </article>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/5">
+          <div className="flex flex-col w-28">
             <label className="">날짜</label>
             <input name="time" onChange={onChange} value={input.time}
             type="date" placeholder="YYYY-MM-DD"/>
           </div>
-          <div className="flex flex-col basis-1/5">
+          <div className="flex flex-col w-24">
             <label>지출 금액</label>
             <input name="cost_size" onChange={onChange} value={input.cost_size}
-            type="number" placeholder="금액을 입력해주세요."/>
+            type="number" placeholder="금액"/>
           </div>
-          <div className="flex flex-col basis-1/5">
+          <div className="flex flex-col w-16">
             <label>지출 코드</label>
             <input name="costcode" onChange={onChange} value={input.costcode}
-            type="number" placeholder="코드번호를 입력해주세요."/>
+            type="number" placeholder="코드"/>
+          </div>
+          <div className="flex flex-col">
+            <label>물품 일련번호</label>
+            <input name="stock_id" onChange={onChange} value={input.stock_id}
+            type="text" placeholder="환불/폐기처리시 필수 입력사항"/>
+          </div>
+          <div className="flex flex-col">
+            <label>환불 개수</label>
+            <input name="stock_num" onChange={onChange} value={input.stock_num}
+            type="text" placeholder="환불시 필수 입력사항"/>
           </div>
           <div>
             <button onClick={handleClick}
@@ -176,17 +198,21 @@ function Cost() {
         <table className="w-full">
           <thead align="center" className="border-y-2 border-sky-700">
             <tr>
-              <td width="25%">금액</td>
-              <td width="25%">지출 코드</td>
-              <td width="50%">날짜</td>
+              <td width="20%">금액</td>
+              <td width="20%">지출 코드</td>
+              <td width="20%">날짜</td>
+              <td width="20%">물품 일련번호</td>
+              <td width="20%">개수</td>
             </tr>
           </thead>
           {enter?.map((item, index) => 
             <tbody align="center" key={index}>
               <tr>
-                <td width="25%">{item.cost_size} 원</td>
-                <td width="25%">{item.costcode}</td>
-                <td width="50%">{item.time}</td>
+                <td width="20%">{item.cost_size} 원</td>
+                <td width="20%">{item.costcode}</td>
+                <td width="20%">{item.time}</td>
+                <td width="20%">{item.stock_id}</td>
+                <td width="20%">{item.stock_num}</td>
               </tr>
             </tbody>
           )}
