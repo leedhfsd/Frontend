@@ -71,8 +71,8 @@ function Check() {
               <input name="deleteStaff" onChange={onChangeName} value={deleteStaff}
                   type="text" placeholder="삭제/ 급여를 변경할 직원이름을 입력해주세요."/>
             </div>
-            <div className="flex flex-col mx04 w-32">
-              <label className="">급여 변경</label>
+            <div className="flex flex-col mx-06 w-32">
+              <label className="">변경할 급여</label>
               <input name="salary" onChange={onChangeSalary} value={salary}
                   type="text" placeholder="직원 삭제시 입력X"/>
             </div>
