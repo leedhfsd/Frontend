@@ -2,6 +2,7 @@ import Link from "next/link";
 import Seo from "../components/Seo";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
 
@@ -9,8 +10,6 @@ export default function Login() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
-
-  console.log(userId, password);
   const handleLogin = async (item) => {
     item.preventDefault();
     if (!window) return;
@@ -19,7 +18,20 @@ export default function Login() {
       return;
     }
     try {
-      //로그인 api 부분 
+      const submit = {
+        id: userId,
+        password: password
+      }
+
+      try {
+        const { data } = await axios.post(
+          `/auth/login`, submit
+        );
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+
       console.log("작성예정입니다,.");
     } catch (item) {
       console.error(item);

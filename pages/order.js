@@ -67,16 +67,12 @@ function Submit() {
 
   async function handleSubmit(e) {
     try {
-      const res = await axios.post(`/order`, input).then(alert("발주처리가 완료되었습니다."));
-      console.log(res.data);
+      const res = await axios.post("/order", input).then(alert("발주처리가 완료되었습니다."));
+      console.log("result: ", res.data);
+      alert("...");
     } catch (err) {
       console.log(err);
     }
-
-    setInput({
-      order_num: "",
-      stuff_id: "",
-    })
   }
 
   return (

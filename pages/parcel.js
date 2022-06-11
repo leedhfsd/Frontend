@@ -130,7 +130,8 @@ function Enter() {
 
     try {
       const res = await axios.post(`/package`, input).then(alert("운송장 정보를 기록했습니다"));
-      console.log(res.data);
+      console.log("result: ", res.data);
+      alert("...");
     } catch (err) {
       console.log(err);
     }
