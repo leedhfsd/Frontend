@@ -12,7 +12,6 @@ function Profit() {
     "profitcode":"",
   })
   const [enter, setEnter] = useState([]);
-  console.log(enter);
   const [sum, setSum] = useState(0);
   const onChange = (event) => {
     setInput({
@@ -46,8 +45,6 @@ function Profit() {
       console.log(err);
     }
   }
-
-  console.log(enter);
 
   return (
     <div>

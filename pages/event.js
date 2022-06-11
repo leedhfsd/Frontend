@@ -65,7 +65,6 @@ function Check() {
       console.log(err);
     }
   }
-  console.log(result);
 
   return (
     <div>
@@ -160,7 +159,6 @@ function Enter() {
     event_type:""
   })
   const [enter, setEnter] = useState([]);
-  console.log(enter);
 
   const onChange = (event) => {
     setInput({
@@ -199,7 +197,6 @@ function Enter() {
     }
   }
   
-
   return (
     <div>
       <article className="border-2 rounded-md">

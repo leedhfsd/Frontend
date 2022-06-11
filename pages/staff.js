@@ -45,21 +45,16 @@ function Check() {
   async function handlePatch(e) {
     e.preventDefault();
     try {
-      const response = await axios.patch(
+      const response = await axios.put(
         `http://localhost:3001/employee/salary`, {
-          data: {
             employee_name: deleteStaff,
             salary: salary
           }
-        }
       ).then(alert("급여 변경을 완료했습니다."));
     } catch (err) {
       console.log(err);
     }
   }
-
-  console.log(deleteStaff);
-  console.log(salary);
 
   return (
     <div>
@@ -159,7 +154,7 @@ function Enter() {
       console.log(err);
     }
   }
-  console.log(enter);
+
   return (
     <div>
       <article className="border-2 rounded-md">

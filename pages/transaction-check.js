@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 axios.defaults.withCredentials = true
 
-
 function Profit() {
   const [result, setResult] = useState([]);
   const [input, setInput] = useState({
@@ -33,14 +32,11 @@ function Profit() {
         `http://localhost:3001/profit/?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
       );
       setResult(data);
-      setSum(()=> data.map(item => item.day_profit).reduce((prev, curr) => prev + curr, 0));
+      setSum(()=> data.map(item => item.profit).reduce((prev, curr) => prev + curr, 0));
     } catch (err) {
       console.log(err);
     }
-
   }
-  console.log(result);
-
 
   return (
     <div>
@@ -80,14 +76,14 @@ function Profit() {
           {result?.map((item, index) => 
             <tbody align="center" key={index}>
               <tr>
-                <td width="25%">{item.day_profit} 원</td>
+                <td width="25%">{item.profit} 원</td>
                 <td width="25%">{item.profitcode}</td>
-                <td width="50%">{item.time}</td>
+                <td width="50%">{item.profit_date}</td>
               </tr>
             </tbody>
           )}
           <tfoot>
-            <tr align="" className="border-t-2 border-sky-700">
+            <tr align="">
               <td>수익 합계: <span className="text-blue-600">{sum} 원</span></td>
             </tr>
           </tfoot>
@@ -124,14 +120,11 @@ function Spending() {
         `http://localhost:3001/cost/?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
       );
       setResult(data);
-      setSum(()=> data.map(item => item.cost_size).reduce((prev, curr) => prev + curr, 0));
+      setSum(()=> data.map(item => item.cost).reduce((prev, curr) => prev + curr, 0));
     } catch (err) {
       console.log(err);
     }
-
   }
-  console.log(result);
-  console.log(sum);
 
   return (
     <div>
@@ -171,14 +164,14 @@ function Spending() {
           {result?.map((item, index) => 
             <tbody align="center" key={index}>
               <tr>
-                <td width="25%">{item.cost_size} 원</td>
+                <td width="25%">{item.cost} 원</td>
                 <td width="25%">{item.costcode}</td>
-                <td width="50%">{item.time}</td>
+                <td width="50%">{item.cost_date}</td>
               </tr>
             </tbody>
           )}
           <tfoot>
-            <tr align="left" className="border-t-2 border-sky-700">
+            <tr align="left">
               <td>지출 합계: <span className="text-red-600">{sum} 원</span></td>
             </tr>
           </tfoot>
