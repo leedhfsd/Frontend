@@ -103,7 +103,7 @@ function Enter() {
             <td width="16%">수익 코드</td>
             <td width="16%">날짜</td>
           </thead>
-          {enter?.map((item, index) => 
+          {enter?.map((item, index) =>
             <tbody align="center" key={index}>
               <tr>
                 <td width="16%">{item.stuff_name}</td>
@@ -157,10 +157,10 @@ function Check() {
     try {
       const res = await axios.delete(
         `/stuff/ditem`, {
-          data: {
-            stuff_id: id
-          }
+        data: {
+          stuff_id: id
         }
+      }
       );
 
       alert("삭제되었습니다.");
@@ -174,6 +174,10 @@ function Check() {
       console.log(err);
     }
   }
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
   return (
     <div>
@@ -224,8 +228,8 @@ function Check() {
                 <td>{item.stuff_id}</td>
                 <td>{item.stuff_name}</td>
                 <td>{item.stuffcode}</td>
-                <td>{item.first_cost}</td>
-                <td>{item.fixed_price}</td>
+                <td>{numberWithCommas(item.first_cost)}</td>
+                <td>{numberWithCommas(item.fixed_price)}</td>
                 <td>{item.provider}</td>
                 <td>{item.expire_period}</td>
                 <td>{item.auto_order_num}</td>
@@ -326,7 +330,7 @@ function Revise() {
             <td width="25%">날짜</td>
             <td width="25%">금액</td>
           </thead>
-          {enter?.map((item, index) => 
+          {enter?.map((item, index) =>
             <tbody align="center" key={index}>
               <tr>
                 <td width="25%">{item.stuff_id}</td>
