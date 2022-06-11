@@ -20,6 +20,15 @@ function Check() {
     })
   };
 
+  // function filter(branch, package_type, sortBy) {
+  //   console.log("filter");
+  //   for(let i = 0; i < result.length; i++) {
+  //     if ((branch === "" || (result[i].branch === branch))) {
+  //       console.log((package_type === "반값택배" && result[i].pakage_type === 2) || (package_type === "택배" && result[i].pakage_type === 1))
+  //     }
+  //   }
+  // }
+
   async function handleClick(e) {
     e.preventDefault();
     setResult([]);
@@ -28,21 +37,16 @@ function Check() {
 
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/package`, input
+        `http://localhost:3001/package`, JSON.stringify(input)
       );
-      console.log("test: ", data);
       setResult(data);
+      console.log("result: ", result[1]);
     } catch (err) {
       console.log(err);
     }
+
+    // filter(input.branch, input.package_type, input.sortBy);
     
-    setInput({
-      branch: "",
-      package_type: "택배",
-      sortBy: "asc",
-      limit: "",
-      page: ""
-    })
   }
 
   return (
@@ -85,7 +89,7 @@ function Check() {
               <td width="25%">종류</td>
             </tr>
           </thead>
-          <tbody>
+          {input.sortBy === "asc" ? <tbody>
             {result?.map((item, index) =>
               <tr align="left" key={index}>
                 <td>{item.createdAt.substring(0, 10) + " " + item.createdAt.substring(11, 19)}</td>
@@ -94,7 +98,16 @@ function Check() {
                 <td>{item.pakage_type === 1 ? "택배" : "반값택배"}</td>
               </tr>
             )}
-          </tbody>
+          </tbody> : <tbody>
+            {result?.reverse().map((item, index) =>
+              <tr align="left" key={index}>
+                <td>{item.createdAt.substring(0, 10) + " " + item.createdAt.substring(11, 19)}</td>
+                <td>{item.s_address}</td>
+                <td>{item.package_price}</td>
+                <td>{item.pakage_type === 1 ? "택배" : "반값택배"}</td>
+              </tr>
+            )}
+          </tbody>}
         </table>
       </article>
     </div>
@@ -113,7 +126,7 @@ function Enter() {
     s_name: "",
     commision: "",
     package_price: "",
-    pakage_type: "택배"
+    package_type: "택배"
   })
 
   const onChange = (event) => {
@@ -125,29 +138,14 @@ function Enter() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(JSON.stringify(input));
+    console.log(input)
 
     try {
       const res = await axios.post(`http://localhost:3001/package`, input).then(alert("운송장 정보를 기록했습니다"));
       console.log("result: ", res.data);
-      alert("...");
     } catch (err) {
       console.log(err);
     }
-
-    setInput({
-      branch: "",
-      weight: "",
-      b_phone: "",
-      b_name: "",
-      b_address: "",
-      s_phone: "",
-      s_address: "",
-      s_name: "",
-      commision: "",
-      package_price: "",
-      pakage_type: "택배"
-    })
   }
 
   return (
