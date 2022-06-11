@@ -3,13 +3,14 @@ import Seo from "../components/Seo";
 import { useState } from "react";
 import axios from "axios";
 
+axios.defaults.withCredentials = true
+
 function Check() {
   const [input, setInput] = useState({
     startd:"",
     endd:""
   })
   const [result, setResult] = useState([]);
-  const [test, setTest] = useState([]);
   console.log(result);
 
   const onChange = (event) => {
@@ -32,7 +33,7 @@ function Check() {
 
     try {
       const {data} = await axios.get(
-        `/commute?startd=${input.startd}&endd=${input.endd}`
+        `http://localhost:3001/commute?startd=${input.startd}&endd=${input.endd}`
       );
       setResult(data);
     } catch (err) {
@@ -70,12 +71,12 @@ function Check() {
             <td width="33%">출근 시각</td>
             <td width="33%">퇴근 시각</td>
           </thead>
-          {test?.map((item, index) => 
+          {result?.map((item, index) => 
             <tbody key={index}>
               <tr>
                 <td width="33%">{item.employee_id}</td>
                 <td width="33%">{item.commute_start}</td>
-                <td width="3%">{item.commute_end}</td>
+                <td width="33%">{item.commute_end}</td>
               </tr>
             </tbody>
           )}
@@ -118,7 +119,7 @@ function Enter() {
     try {
       for (let i = 0; i < enter.length; i++){
         const response = await axios.post(
-          `/commute`, enter[i]
+          `http://localhost:3001/commute`, enter[i]
         ).then(alert("서버에 전송완료."));
       }
     } catch (err) {

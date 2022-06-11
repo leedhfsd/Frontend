@@ -2,6 +2,7 @@ import Link from "next/link";
 import Seo from "../components/Seo";
 import { useState } from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true
 
 function Check() {
   const [input, setInput] = useState({
@@ -38,7 +39,7 @@ function Check() {
       limit:"",
       page:"",
     });
-    const url = `/event?event_type=${input.event_type.replace(/\+/g,"%2B")}&stuff_name=${input.stuff_name}&sortBy=${input.sortBy}&limit=${input.limit}&page=${input.page}`;
+    const url = `http://localhost:3001/event?event_type=${input.event_type.replace(/\+/g,"%2B")}&stuff_name=${input.stuff_name}&sortBy=${input.sortBy}&limit=${input.limit}&page=${input.page}`;
 
     try {
       const {data} = await axios.get(
@@ -54,7 +55,7 @@ function Check() {
     e.preventDefault();
     try {
       const res = await axios.delete(
-        `/event?event_id=${eventId}`, {
+        `http://localhost:3001/event?event_id=${eventId}`, {
           data: {
             event_id: eventId
           }
@@ -188,7 +189,7 @@ function Enter() {
     try {
       for (let i = 0; i < enter.length; i++){
         const response = await axios.post(
-          `/event`, enter[i]
+          `http://localhost:3001/event`, enter[i]
         ).then(alert("서버에 전송완료."));
       }
     } catch (err) {
