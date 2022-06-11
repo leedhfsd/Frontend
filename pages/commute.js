@@ -5,7 +5,7 @@ import axios from "axios";
 
 function Check() {
   const [input, setInput] = useState({
-    stard:"",
+    startd:"",
     endd:""
   })
   const [result, setResult] = useState([]);
@@ -25,13 +25,13 @@ function Check() {
       return;
     }
     setInput({
-      stard:"",
+      startd:"",
       endd:""
     });
 
     try {
       const {data} = await axios.get(
-        `/commute/list?startd=${input.stard}&endd=${input.endd}`, input
+        `/commute?startd=${input.startd}&endd=${input.endd}`
       );
       setResult(data);
     } catch (err) {
@@ -117,7 +117,7 @@ function Enter() {
     try {
       for (let i = 0; i < enter.length; i++){
         const response = await axios.post(
-          `/commute/commute`, enter[i]
+          `/commute`, enter[i]
         ).then(alert("서버에 전송완료."));
       }
     } catch (err) {

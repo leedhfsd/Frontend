@@ -29,7 +29,7 @@ function Profit() {
 
     try {
       const {data} = await axios.get(
-        `profit/list?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
+        `profit/?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
       );
       setResult(data);
       setSum(()=> data.map(item => item.day_profit).reduce((prev, curr) => prev + curr, 0));
@@ -116,7 +116,7 @@ function Spending() {
     }
     try {
       const {data} = await axios.get(
-        `cost/list?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
+        `cost/?startdate=${input.startdate}&enddate=${input.enddate}&profitcode=${input.profitcode}&sumcode=${input.sumcode}`
       );
       setResult(data);
       setSum(()=> data.map(item => item.cost_size).reduce((prev, curr) => prev + curr, 0));

@@ -39,7 +39,7 @@ function Profit() {
     e.preventDefault();
     try {
       const response = await axios.post(
-          `/profit/newprofit`, enter
+          `/profit`, enter
         ).then(alert("서버에 전송완료."));
     } catch (err) {
       console.log(err);
@@ -135,7 +135,7 @@ function Cost() {
     e.preventDefault();
     try {
       const response = await axios.post(
-          `/cost/newcost`, enter
+          `/cost`, enter
         ).then(alert("서버에 전송완료."));
     } catch (err) {
       console.log(err);

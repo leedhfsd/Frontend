@@ -14,7 +14,7 @@ function Check() {
     e.preventDefault();
     try {
       const {data} = await axios.get(
-        `/employee/list`
+        `/employee`
       );
       setResult(data);
     } catch (err) {
@@ -26,7 +26,7 @@ function Check() {
     e.preventDefault();
     try {
       const res = await axios.delete(
-        `/employee/fire`, {
+        `/employee`, {
           data: {
             employee_name: deleteStaff
           }
@@ -118,7 +118,7 @@ function Enter() {
     try {
       for (let i = 0; i < enter.length; i++){
         const response = await axios.post(
-          `/employee/newemployee`, enter[i]
+          `/employee`, enter[i]
         ).then(alert("서버에 전송완료."));
       }
     } catch (err) {
