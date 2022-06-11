@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Seo from "../components/Seo";
 import axios from "axios";
+import { filter } from "async";
 axios.defaults.withCredentials = true;
 
 function Check() {
@@ -12,6 +13,7 @@ function Check() {
     page: ""
   })
   const [result, setResult] = useState([]);
+  const [print, setPrint] = useState([]);
 
   const onChange = (event) => {
     setInput({
@@ -22,21 +24,15 @@ function Check() {
 
   async function handleClick(e) {
     e.preventDefault();
-    setResult([]);
     
-    console.log(input);
-
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/package`, input
-      );
-      setResult(data);
-      if (input.package_type !== "") {
-        setResult(result.filter((item, index)=> (input.package_type === "택배" ? (item.pakage_type !== 2) : (item.pakage_type !== 1))));
-      }
-      console.log("result: ", result);
-    } catch (err) {
-      console.log(err);
+    const res = await axios.get(
+      `http://localhost:3001/package`, input
+    );
+    
+    if (input.package_type !== "") {
+      setResult(res.data.filter((item, index)=> (input.package_type === "택배" ? (item.pakage_type !== 2) : (item.pakage_type !== 1))));
+    } else {
+      setResult(res.data);
     }
   }
 
@@ -45,7 +41,7 @@ function Check() {
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/3">
-            <label className="">지점</label>
+            <label className="">배송 지점</label>
             <input name="branch" value={input.branch} onChange={onChange}
               type="text" placeholder="선택사항입니다." />
           </div>
@@ -102,7 +98,7 @@ function Check() {
           </tbody>}
         </table>
       </article>
-    </div>
+    </div> 
   );
 }
 
