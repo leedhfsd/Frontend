@@ -3,6 +3,7 @@ import Seo from "../components/Seo";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 export default function Login() {
 
@@ -24,15 +25,17 @@ export default function Login() {
       }
 
       try {
-        const { data } = await axios.post(
-          `/auth/login`, submit
+        const res = await axios.post(
+          `http://localhost:3001/auth/login`, submit
         );
-        console.log(data);
+        console.log("res: ", res);
+        if(res.status === 200) {
+          alert("로그인에 성공했습니다.");
+        }
+        window.location.replace("http://localhost:3000");
       } catch (err) {
         console.log(err);
       }
-
-      console.log("작성예정입니다,.");
     } catch (item) {
       console.error(item);
     }
