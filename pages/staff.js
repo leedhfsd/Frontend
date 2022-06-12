@@ -128,7 +128,7 @@ function Enter() {
   
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.salary === "" || input.id === "" || input.employee_name === "" || input.employee_phone === "" || input.pw === "") {
+    if (input.id === "" || input.employee_name === ""|| input.pw === "") {
       alert("모든 칸을 입력해주세요.");
       return;
     }
