@@ -213,19 +213,21 @@ function BuyList() {
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
             <tr>
-              <td width="20%">재고량</td>
+              <td width="20%">물품id</td>
               <td width="20%">구매 코드</td>
               <td width="20%">가격</td>
               <td width="20%">구매 수량</td>
+              <td width="20%">구매 시간</td>
             </tr>
           </thead>
           <tbody>
             {result?.map((item, index) =>
               <tr align="left" key={index}>
-                <td>{item.stock_id}</td>
+                <td>{item.stuff_id}</td>
                 <td>{item.buycode}</td>
                 <td>{item.price}</td>
                 <td>{item.buy_num}</td>
+                <td>{item.buy_date}</td>
               </tr>
             )}
           </tbody>
