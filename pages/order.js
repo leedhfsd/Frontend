@@ -138,6 +138,57 @@ function Submit() {
   )
 }
 
+function Check2(){
+  const [result, setResult] = useState([]);
+
+  async function handleSubmit2(e) {
+    e.preventDefault();
+    setResult([]);
+    try {
+      const res = await axios.get(`http://localhost:3001/order/necessary`)
+      console.log("result: ", res.data);
+      setResult(res.data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return(
+    <div>
+      <article className="">
+        <div>
+          <button onClick={handleSubmit2} className="bg-sky-700 text-white rounded-md py-2.5 px-6 w-28">조회하기</button>
+        </div>
+      </article>
+      <article className="my-16 border-2">
+        <div>총 {result.length}건</div>
+        <table className="w-full">
+          <thead align="" className="border-y-2 border-sky-700">
+            <tr>
+              <td width="16%">재고id</td>
+              <td width="16%">재고개수</td>
+              <td width="16%">유통기한</td>
+              <td width="16%">물품id</td>
+              <td width="16%">지점코드</td>
+            </tr>
+          </thead>
+          <tbody>
+            {result?.map((item, index) =>
+              <tr align="left" key={index}>
+                <td>{item.stock_id}</td>
+                <td>{item.stock_num}</td>
+                <td>{item.expired_date.substring(0, 10) + " " + item.expired_date.substring(11, 19)}</td>
+                <td>{item.stuff_id}</td>
+                <td>{item.branch_id}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </article>
+    </div>
+  )
+}
+
 export default function Order() {
   const [type, setType] = useState("check");
   const onChange = (event) => setType(event.target.value);
@@ -163,11 +214,12 @@ export default function Order() {
               <select value={type} onChange={onChange} id="type-select">
                 <option value="check">발주기록 조회</option>
                 <option value="enter">발주 신청</option>
+                <option value="check2">발주요망물품 조회</option>
               </select>
             </div>
           </div>
         </article>
-        {type === "check" ? <Check /> : <Submit />}
+        {type === "check" ? <Check /> : (type === "enter"? <Submit />: <Check2/>)}
       </main>
     </div>
   )
