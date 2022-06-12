@@ -86,7 +86,7 @@ function Stock() {
           <div className="flex flex-col basis-1/6">
             <label className="">유통기한</label>
             <input name="expired_date" value={input.expired_date} onChange={onChange}
-              type="text" placeholder="유통기한" />
+              type="text" placeholder="yyyy-mm-dd" />
           </div>
           <div className="flex flex-col w-48">
             <label className="">재고 설정하기</label>
