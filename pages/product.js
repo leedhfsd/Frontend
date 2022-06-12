@@ -26,15 +26,13 @@ function Stock() {
     setResult([]);
     console.log("input: ", input);
 
-    const submit = {
-      stuff_name: input.stuff_name
-    }
 
     try {
       const res = await axios.get(
-        `http://localhost:3001/stock`, submit
+        `http://localhost:3001/stock?stuff_name=${input.stuff_name}`
       );
       setResult(res.data);
+      console.log("test: ", res.data);
     } catch (err) {
       console.log(err);
     }
@@ -163,32 +161,11 @@ function BuyList() {
   async function handleClick(e) {
     e.preventDefault();
     setResult([]);
-    console.log(input)
     const res = await axios.get(
       `http://localhost:3001/buy?startdate=${input.startdate}&enddate=${input.enddate}&buycode=${input.buycode}&age=${input.age}&sex=${input.sex}&sumcode=${input.sumcode}` 
     );
-    let a = res.data;
-    // console.log(res.data)
-    // if (input.stuff_name !== "") {
-    //   // setResult(res.data.filter((item, index) => (input.stuff_name === item.stuff_name)));
-    //   a = res.data.filter((item, index) => (input.stuff_name === item.stuff_name));
-    // } else {
-    //   a = res.data;
-    // }
-    // if (input.stuff_id !== "") {
-    //   // setResult(res.data.filter((item, index) => (input.stuff_id === string(item.stuff_id))));
-    //   a = a.filter((item, index) => (input.stuff_id === string(item.stuff_id)));
-    // }
-    // if (input.stuffcode !== "") {
-    //   // setResult(res.data.filter((item, index) => (input.stuffcode === string(item.stuffcode))));
-    //   a = a.filter((item, index) => (input.stuffcode === string(item.stuffcode)));
-    // }
-    console.log(a)
-    setResult(a);
-  }
-
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    setResult(res.data);
+    console.log("result: ", result);
   }
 
   return (
@@ -237,7 +214,6 @@ function BuyList() {
           <thead align="" className="border-y-2 border-sky-700">
             <tr>
               <td width="20%">재고량</td>
-              <td width="20%">시각</td>
               <td width="20%">구매 코드</td>
               <td width="20%">가격</td>
               <td width="20%">구매 수량</td>
@@ -246,10 +222,9 @@ function BuyList() {
           <tbody>
             {result?.map((item, index) =>
               <tr align="left" key={index}>
-                <td>{item.stuff_id}</td>
-                <td>{item.buy_date}</td>
+                <td>{item.stock_id}</td>
                 <td>{item.buycode}</td>
-                <td>{numberWithCommas(item.price)}</td>
+                <td>{item.price}</td>
                 <td>{item.buy_num}</td>
               </tr>
             )}
