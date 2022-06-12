@@ -26,11 +26,18 @@ function Stock() {
     setResult([]);
     console.log("input: ", input);
 
-    const res = await axios.get(
-      `http://localhost:3001/stock`,
-    );
-    setResult(res.data);
-    console.log("test:, ", res.data);
+    const submit = {
+      stuff_name: input.stuff_name
+    }
+
+    try {
+      const res = await axios.get(
+        `http://localhost:3001/stock`, submit
+      );
+      setResult(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async function handlePost(e) {
@@ -113,14 +120,16 @@ function Stock() {
         <table className="w-full">
           <thead align="" className="border-y-2 border-sky-700">
             <tr>
-              <td width="30%">제품id</td>
-              <td width="40%">유통기한</td>
-              <td width="30%">재고량</td>
+              <td width="25%">제품id</td>
+              <td width="25%">제품id</td>
+              <td width="25%">유통기한</td>
+              <td width="25%">재고량</td>
             </tr>
           </thead>
           <tbody>
             {result?.map((item, index) =>
               <tr align="left" key={index}>
+                <td>{item.stuff_id}</td>
                 <td>{item.stock_id}</td>
                 <td>{item.expired_date.substring(0, 10) + " " + item.expired_date.substring(11, 19)}</td>
                 <td>{item.stock_num}</td>
@@ -758,8 +767,7 @@ export default function Product() {
             </div>
           </div>
         </article>
-        <Stock />
-        {/* {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : (type === "buy" ? <Buy /> : (type === "buyList" ? <BuyList /> : <Stock />))))} */}
+        {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : (type === "buy" ? <Buy /> : (type === "buyList" ? <BuyList /> : <Stock />))))}
       </main>
     </div>
   )
