@@ -149,7 +149,7 @@ function Check() {
 
     let a;
 
-    if(input.stuff_name !== "") {
+    if (input.stuff_name !== "") {
       // setResult(res.data.filter((item, index) => (input.stuff_name === item.stuff_name)));
       a = res.data.filter((item, index) => (input.stuff_name === item.stuff_name));
     } else {
@@ -192,7 +192,7 @@ function Check() {
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+  }
 
   return (
     <div>
@@ -364,6 +364,10 @@ function Revise() {
 export default function Product() {
   const [type, setType] = useState("check");
   const onChange = (event) => setType(event.target.value);
+  const openWindow = () => {
+    const options = 'top=10, left=10, width=400, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+    window.open("/code","코드", options);
+  }
 
   return (
     <div>
@@ -374,6 +378,8 @@ export default function Product() {
             <div className="flex-col">
               <h1 className="text-2xl font-bold">물품 관리</h1>
               <h1 className="text-xs text-gray-400">물품 조회/추가/수정/삭제가 가능합니다.</h1>
+              <button onClick={openWindow}
+                className="text-sm rounded-md">코드확인</button>
             </div>
             <div>
               <label htmlFor="type-select" className="px-4">유형: </label>

@@ -3,10 +3,6 @@ import Seo from "../components/Seo";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-function NecessarySubmit() {
-
-}
-
 function Check() {
   const [result, setResult] = useState([]);
 
@@ -83,7 +79,7 @@ function Check() {
                 <td>{item.order_id}</td>
                 <td>{item.order_num}</td>
                 <td>{numberWithCommas(item.order_cost)}</td>
-                <td>{item.time.substring(0, 10) + " " + item.time.substring(11, 19)}</td>
+                <td>{item.order_date.substring(0, 10) + " " + item.order_date.substring(11, 19)}</td>
                 <td>{item.stuff_id}</td>
                 <td>{item.branch_id}</td>
                 <td><button onClick={(e) => deleteStuff(e, item.order_id)}>삭제</button></td>
@@ -111,9 +107,8 @@ function Submit() {
 
   async function handleSubmit(e) {
     try {
-      const res = await axios.post(`http://localhost:3001/order`, input).then(alert("test..."));
+      const res = await axios.post(`http://localhost:3001/order`, input).then(alert("발주처리가 완료되었습니다"));
       console.log("result: ", res.data);
-      alert("...");
       const { data } = await axios.get(
         `http://localhost:3001/order`
       );

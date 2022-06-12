@@ -34,6 +34,7 @@ export default function Login() {
         }
         window.location.replace("http://localhost:3000");
       } catch (err) {
+        alert("로그인에 실패했습니다.");
         console.log(err);
       }
     } catch (item) {
