@@ -332,7 +332,7 @@ function Revise() {
           </div>
           <div>
             <button onClick={handleClick} className="bg-sky-700 text-white rounded-md px-6 h-full">추가</button>
-            <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md px-6 h-full">확인</button>
+            <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md ml-1 px-6 h-full">확인</button>
           </div>
         </form>
       </article>
