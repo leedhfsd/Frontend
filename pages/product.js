@@ -11,7 +11,7 @@ function BuyList() {
     buycode: "",
     age: "",
     sex: "",
-    sumcode: "",
+    sumcode: 0,
   })
   const [result, setResult] = useState([]);
 
@@ -25,28 +25,27 @@ function BuyList() {
   async function handleClick(e) {
     e.preventDefault();
     setResult([]);
-    console.log("input: ", input);
-
+    console.log(input)
     const res = await axios.get(
-      `http://localhost:3001/stuff`, input
+      `http://localhost:3001/buy?startdate=${input.startdate}&enddate=${input.enddate}&buycode=${input.buycode}&age=${input.age}&sex=${input.sex}&sumcode=${input.sumcode}` 
     );
-
     let a = res.data;
-
-    if (input.stuff_name !== "") {
-      // setResult(res.data.filter((item, index) => (input.stuff_name === item.stuff_name)));
-      a = res.data.filter((item, index) => (input.stuff_name === item.stuff_name));
-    } else {
-      a = res.data;
-    }
-    if (input.stuff_id !== "") {
-      // setResult(res.data.filter((item, index) => (input.stuff_id === string(item.stuff_id))));
-      a = a.filter((item, index) => (input.stuff_id === string(item.stuff_id)));
-    }
-    if (input.stuffcode !== "") {
-      // setResult(res.data.filter((item, index) => (input.stuffcode === string(item.stuffcode))));
-      a = a.filter((item, index) => (input.stuffcode === string(item.stuffcode)));
-    }
+    // console.log(res.data)
+    // if (input.stuff_name !== "") {
+    //   // setResult(res.data.filter((item, index) => (input.stuff_name === item.stuff_name)));
+    //   a = res.data.filter((item, index) => (input.stuff_name === item.stuff_name));
+    // } else {
+    //   a = res.data;
+    // }
+    // if (input.stuff_id !== "") {
+    //   // setResult(res.data.filter((item, index) => (input.stuff_id === string(item.stuff_id))));
+    //   a = a.filter((item, index) => (input.stuff_id === string(item.stuff_id)));
+    // }
+    // if (input.stuffcode !== "") {
+    //   // setResult(res.data.filter((item, index) => (input.stuffcode === string(item.stuffcode))));
+    //   a = a.filter((item, index) => (input.stuffcode === string(item.stuffcode)));
+    // }
+    console.log(a)
     setResult(a);
   }
 
@@ -110,7 +109,7 @@ function BuyList() {
             {result?.map((item, index) =>
               <tr align="left" key={index}>
                 <td>{item.stuff_id}</td>
-                <td>{item.time}</td>
+                <td>{item.buy_date}</td>
                 <td>{item.buycode}</td>
                 <td>{numberWithCommas(item.price)}</td>
                 <td>{item.buy_num}</td>
