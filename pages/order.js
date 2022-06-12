@@ -51,13 +51,11 @@ function Check() {
 
   return (
     <div>
-      <article className="border-2 rounded-md">
-        <form className="flex flex-row justify-between">
-          <div>
-            <button onClick={handleClick}
-              className="bg-sky-700 text-white rounded-md px-6 h-full">조회하기</button>
-          </div>
-        </form>
+      <article className="">
+        <div>
+          <button onClick={handleClick}
+          className="bg-sky-700 text-white rounded-md py-2.5 px-6 w-28">조회하기</button>
+        </div>
       </article>
       <article className="my-16 border-2">
         <div>총 {result.length}건</div>
@@ -70,7 +68,7 @@ function Check() {
               <td width="16%">시간</td>
               <td width="16%">상품분류코드</td>
               <td width="16%">지점코드</td>
-              <td width="4%">test</td>
+              <td width="4%">삭제</td>
             </tr>
           </thead>
           <tbody>
@@ -121,15 +119,15 @@ function Submit() {
     <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/2">
+          <div className="flex flex-col basis-1/3">
             <label className="">발주 수량</label>
             <input name="order_num" value={input.order_num} onChange={onChange}
-              type="text" placeholder="발주 수량을 입력하세요" />
+              type="text" placeholder="발주 수량을 입력해주세요." />
           </div>
-          <div className="flex flex-col basis-1/2">
-            <label className="">상품분류코드</label>
+          <div className="flex flex-col basis-1/3">
+            <label className="">물품 번호</label>
             <input name="stuff_id" value={input.stuff_id} onChange={onChange}
-              type="text" placeholder="상품분류코드를 입력하세요" />
+              type="text" placeholder="물품번호를 입력해주세요." />
           </div>
           <div>
             <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md px-6 h-full">추가</button>
