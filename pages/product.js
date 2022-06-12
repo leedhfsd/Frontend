@@ -58,39 +58,39 @@ function Enter() {
     <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col">
             <label className="">물품 명</label>
             <input name="stuff_name" value={input.stuff_name} onChange={onChange}
               type="text" placeholder="물품 명" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-32">
             <label className="">물품 코드</label>
             <input name="stuffcode" value={input.stuffcode} onChange={onChange}
               type="text" placeholder="물품 코드" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-32">
             <label className="">원가</label>
             <input name="first_cost" value={input.first_cost} onChange={onChange}
               type="text" placeholder="원가" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-32">
             <label className="">정가</label>
             <input name="fixed_price" value={input.fixed_price} onChange={onChange}
               type="text" placeholder="정가" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-32">
             <label className="">제조사</label>
             <input name="provider" value={input.provider} onChange={onChange}
               type="text" placeholder="제조사" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-32">
             <label className="">자동발주 기준</label>
             <input name="auto_order_num" value={input.auto_order_num} onChange={onChange}
               type="text" placeholder="자동발주 기준" />
           </div>
           <div>
             <button onClick={handleClick} className="bg-sky-700 text-white rounded-md px-6 h-full">추가</button>
-            <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md px-6 h-full">확인</button>
+            <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md ml-1 px-6 h-full">확인</button>
           </div>
         </form>
       </article>
@@ -98,12 +98,12 @@ function Enter() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="center" className="border-y-2 border-sky-700">
-            <td width="16%">금액</td>
-            <td width="16%">수익 코드</td>
-            <td width="16%">날짜</td>
-            <td width="16%">금액</td>
-            <td width="16%">수익 코드</td>
-            <td width="16%">날짜</td>
+            <td width="16%">물품명</td>
+            <td width="16%">물품 코드</td>
+            <td width="16%">원가</td>
+            <td width="16%">정가</td>
+            <td width="16%">제조사</td>
+            <td width="16%">자동발주 기준</td>
           </thead>
           {enter?.map((item, index) =>
             <tbody align="center" key={index}>
@@ -208,7 +208,7 @@ function Check() {
             <input name="stuff_id" value={input.stuff_id} onChange={onChange}
               type="number" placeholder="선택사항입니다." />
           </div>
-          <div className="flex flex-col basis-1/3">
+          <div className="flex flex-col w-48">
             <label className="">특정 상품분류코드 선택하기</label>
             <input name="stuffcode" value={input.stuffcode} onChange={onChange}
               type="number" placeholder="선택사항입니다." />
@@ -311,7 +311,7 @@ function Revise() {
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/7">
-            <label className="">물품id</label>
+            <label className="">물품 번호</label>
             <input name="stuff_id" value={input.stuff_id} onChange={onChange}
               type="text" placeholder="물품id" />
           </div>
@@ -340,10 +340,10 @@ function Revise() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="center" className="border-y-2 border-sky-700">
-            <td width="25%">금액</td>
-            <td width="25%">수익 코드</td>
-            <td width="25%">날짜</td>
-            <td width="25%">금액</td>
+            <td width="25%">물품 번호</td>
+            <td width="25%">자동발주 기준</td>
+            <td width="25%">원가</td>
+            <td width="25%">정가</td>
           </thead>
           {enter?.map((item, index) =>
             <tbody align="center" key={index}>

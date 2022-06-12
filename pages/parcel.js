@@ -53,7 +53,7 @@ function Check() {
               <option value="반값택배">반값택배</option>
             </select>
           </div>
-          <div className="flex flex-col basis-1/3">
+          <div className="flex flex-col">
             <label className="">정렬</label>
             <select name="sortBy" value={input.sortBy} onChange={onChange}>
               <option value="asc">오름차순</option>
