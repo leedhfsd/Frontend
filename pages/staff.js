@@ -128,8 +128,8 @@ function Enter() {
   
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.salary === "" || input.id === "" || input.employee_name === "" || input.employee_phone === "" || input.pw === "") {
-      alert("모든 칸을 입력해주세요.");
+    if (input.id === "" || input.employee_name === "" || input.pw === "") {
+      alert("직원이름 / ID / PW 칸을 입력해주세요.");
       return;
     }
     setEnter([...enter, input]);
