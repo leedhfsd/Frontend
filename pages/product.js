@@ -4,6 +4,125 @@ import axios from "axios";
 import { string } from "nunjucks/src/filters";
 axios.defaults.withCredentials = true;
 
+function Buy() {
+  const [input, setInput] = useState({
+    "buy_num": "",
+    "buycode": "",
+    "age": "",
+    "sex": "",
+    "time": "",
+    "stuff_id": ""
+  })
+  const [enter, setEnter] = useState([]);
+  console.log(enter);
+  const onChange = (event) => {
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    })
+  };
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    if (input.buy_num === "" || input.buycode === "" || input.age === "" || input.sex === "" || input.time === "" || input.stuff_id === "") {
+      alert("모든 칸을 입력해주세요.");
+      return;
+    }
+    setEnter([...enter, input]);
+    setInput({
+      "buy_num": "",
+      "buycode": "",
+      "age": "",
+      "sex": "",
+      "time": "",
+      "stuff_id": ""
+    })
+
+    console.log(enter);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log(JSON.stringify(enter));
+
+    try {
+      const res = await axios.post(`http://localhost:3001/stuff/buy`, enter).then(alert("구매처리가 완료되었습니다"));
+      console.log("result: ", res.data);
+      setEnter([]);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return (
+    <div>
+      <article className="border-2 rounded-md">
+        <form className="flex flex-row justify-between">
+          <div className="flex flex-col basis-1/7">
+            <label className="">물품 개수</label>
+            <input name="buy_num" value={input.buy_num} onChange={onChange}
+              type="text" placeholder="물품 개수" />
+          </div>
+          <div className="flex flex-col basis-1/7">
+            <label className="">구매코드</label>
+            <input name="buycode" value={input.buycode} onChange={onChange}
+              type="text" placeholder="구매코드" />
+          </div>
+          <div className="flex flex-col basis-1/7">
+            <label className="">나이</label>
+            <input name="age" value={input.age} onChange={onChange}
+              type="text" placeholder="나이" />
+          </div>
+          <div className="flex flex-col basis-1/7">
+            <label className="">성별</label>
+            <input name="sex" value={input.sex} onChange={onChange}
+              type="text" placeholder="남성: 0, 여성: 1" />
+          </div>
+          <div className="flex flex-col basis-1/7">
+            <label className="">날짜</label>
+            <input name="time" value={input.time} onChange={onChange}
+              type="text" placeholder="yyyy-mm-dd" />
+          </div>
+          <div className="flex flex-col basis-1/7">
+            <label className="">물품id</label>
+            <input name="stuff_id" value={input.stuff_id} onChange={onChange}
+              type="text" placeholder="물품id" />
+          </div>
+          <div>
+            <button onClick={handleClick} className="bg-sky-700 text-white rounded-md px-6 h-full">추가</button>
+            <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md px-6 h-full">확인</button>
+          </div>
+        </form>
+      </article>
+      <article className="my-16 border-2">
+        <div>총 {enter.length}건</div>
+        <table className="w-full">
+          <thead align="center" className="border-y-2 border-sky-700">
+            <td width="16%">물품 개수</td>
+            <td width="16%">구매 코드</td>
+            <td width="16%">나이</td>
+            <td width="16%">성별</td>
+            <td width="16%">날짜</td>
+            <td width="16%">물품id</td>
+          </thead>
+          {enter?.map((item, index) =>
+            <tbody align="center" key={index}>
+              <tr>
+                <td width="16%">{item.buy_num}</td>
+                <td width="16%">{item.buycode}</td>
+                <td width="16%">{item.age}</td>
+                <td width="16%">{item.sex}</td>
+                <td width="16%">{item.time}</td>
+                <td width="16%">{item.stuff_id}</td>
+              </tr>
+            </tbody>
+          )}
+        </table>
+      </article>
+    </div>
+  )
+}
+
 function Enter() {
   const [input, setInput] = useState({
     "stuff_name": "",
@@ -387,11 +506,13 @@ export default function Product() {
                 <option value="check">물품 조회</option>
                 <option value="enter">물품 추가</option>
                 <option value="revise">물품정보 수정</option>
+                <option value="buy">물품구매 추가</option>
+                <option value="buy">물품구매 조회</option>
               </select>
             </div>
           </div>
         </article>
-        {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : <Revise />)}
+        {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : <Buy />))}
       </main>
     </div>
   )
