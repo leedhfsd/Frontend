@@ -78,12 +78,12 @@ function Stock() {
             <button onClick={handleCheck}
               className="bg-sky-700 text-white rounded-md px-6 h-full">조회</button>
           </div>
-          <div className="flex flex-col basis-1/6">
+          <div className="flex flex-col w-32">
             <label className="">물품명</label>
             <input name="stuff_name" value={input.stuff_name} onChange={onChange}
               type="text" placeholder="물품명" />
           </div>
-          <div className="flex flex-col basis-1/6">
+          <div className="flex flex-col w-32">
             <label className="">유통기한</label>
             <input name="expired_date" value={input.expired_date} onChange={onChange}
               type="text" placeholder="yyyy-mm-dd" />
@@ -172,32 +172,32 @@ function BuyList() {
     <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/6">
-            <label className="">시작일</label>
+          <div className="flex flex-col w-32">
+            <label className="">시작 날짜</label>
             <input name="startdate" value={input.startdate} onChange={onChange}
               type="text" placeholder="선택사항입니다." />
           </div>
-          <div className="flex flex-col basis-1/6">
-            <label className="">종료일</label>
+          <div className="flex flex-col w-32">
+            <label className="">종료 날자</label>
             <input name="enddate" value={input.enddate} onChange={onChange}
               type="text" placeholder="선택사항입니다." />
           </div>
-          <div className="flex flex-col basis-1/6">
+          <div className="flex flex-col w-32">
             <label className="">구매 코드</label>
             <input name="buycode" value={input.buycode} onChange={onChange}
               type="number" placeholder="선택사항입니다." />
           </div>
-          <div className="flex flex-col basis-1/6">
+          <div className="flex flex-col w-32">
             <label className="">나이</label>
             <input name="age" value={input.age} onChange={onChange}
               type="number" placeholder="선택사항입니다." />
           </div>
-          <div className="flex flex-col basis-1/6">
+          <div className="flex flex-col w-32">
             <label className="">성별</label>
             <input name="sex" value={input.sex} onChange={onChange}
               type="number" placeholder="선택사항입니다." />
           </div>
-          <div className="flex flex-col basis-1/6">
+          <div className="flex flex-col w-32">
             <label className="">sumcode</label>
             <input name="sumcode" value={input.sumcode} onChange={onChange}
               type="number" placeholder="선택사항입니다." />
@@ -291,39 +291,39 @@ function Buy() {
     <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-24">
             <label className="">물품 개수</label>
             <input name="buy_num" value={input.buy_num} onChange={onChange}
               type="text" placeholder="물품 개수" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-24">
             <label className="">구매코드</label>
             <input name="buycode" value={input.buycode} onChange={onChange}
               type="text" placeholder="구매코드" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-24">
             <label className="">나이</label>
             <input name="age" value={input.age} onChange={onChange}
               type="text" placeholder="나이" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-32">
             <label className="">성별</label>
             <input name="sex" value={input.sex} onChange={onChange}
               type="text" placeholder="남성: 0, 여성: 1" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col w-24">
             <label className="">날짜</label>
             <input name="time" value={input.time} onChange={onChange}
-              type="text" placeholder="yyyy-mm-dd" />
+              type="date" placeholder="yyyy-mm-dd" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col">
             <label className="">물품id</label>
             <input name="stuff_id" value={input.stuff_id} onChange={onChange}
               type="text" placeholder="물품id" />
           </div>
           <div>
             <button onClick={handleClick} className="bg-sky-700 text-white rounded-md px-6 h-full">추가</button>
-            <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md px-6 h-full">확인</button>
+            <button onClick={handleSubmit} className="bg-sky-700 text-white rounded-md ml-1 px-6 h-full">확인</button>
           </div>
         </form>
       </article>
@@ -331,12 +331,14 @@ function Buy() {
         <div>총 {enter.length}건</div>
         <table className="w-full">
           <thead align="center" className="border-y-2 border-sky-700">
+          <tr>
             <td width="16%">물품 개수</td>
             <td width="16%">구매 코드</td>
             <td width="16%">나이</td>
             <td width="16%">성별</td>
-            <td width="16%">날짜</td>
+            <td width="16%">날짜</td> 
             <td width="16%">물품id</td>
+          </tr>
           </thead>
           {enter?.map((item, index) =>
             <tbody align="center" key={index}>
@@ -660,22 +662,22 @@ function Revise() {
     <div>
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col">
             <label className="">물품 번호</label>
             <input name="stuff_id" value={input.stuff_id} onChange={onChange}
               type="text" placeholder="물품id" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col">
             <label className="">자동발주 기준</label>
             <input name="auto_order_num" value={input.auto_order_num} onChange={onChange}
               type="text" placeholder="자동발주 기준" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col">
             <label className="">물품코드</label>
             <input name="stuffcode" value={input.stuffcode} onChange={onChange}
               type="text" placeholder="물품코드" />
           </div>
-          <div className="flex flex-col basis-1/7">
+          <div className="flex flex-col">
             <label className="">정가</label>
             <input name="fixed_price" value={input.fixed_price} onChange={onChange}
               type="text" placeholder="정가" />
