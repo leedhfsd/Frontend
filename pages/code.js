@@ -100,10 +100,25 @@ export default function Code() {
                 <td>04</td>
                 <td>발주</td>
               </tr>
-              <tr className="border-b-2 border-sky-700">
+              <tr>
                 <td>지출코드</td>
                 <td>05</td>
                 <td>시설 대여비</td>
+              </tr>
+              <tr>
+                <td>지출코드</td>
+                <td>06</td>
+                <td>환불</td>
+              </tr>
+              <tr>
+                <td>지출코드</td>
+                <td>07</td>
+                <td>폐기 부담금</td>
+              </tr>
+              <tr className="border-b-2 border-sky-700">
+              <td>지출코드</td>
+                <td>08</td>
+                <td>수수료</td>
               </tr>
               <tr>
                 <td>수익코드</td>

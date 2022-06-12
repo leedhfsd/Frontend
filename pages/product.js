@@ -147,7 +147,7 @@ function BuyList() {
     buycode: "",
     age: "",
     sex: "",
-    sumcode: 0,
+    sumcode: "",
   })
   const [result, setResult] = useState([]);
 
@@ -201,9 +201,9 @@ function BuyList() {
               type="number" placeholder="선택사항입니다." />
           </div>
           <div className="flex flex-col w-32">
-            <label className="">sumcode</label>
+            <label className="">결과 확인(0:리스트/1:구매총액)</label>
             <input name="sumcode" value={input.sumcode} onChange={onChange}
-              type="number" placeholder="선택사항입니다." />
+              type="number" placeholder="0 또는 1 입력" />
           </div>
           <div>
             <button onClick={handleClick}
@@ -556,7 +556,7 @@ function Check() {
       <article className="border-2 rounded-md">
         <form className="flex flex-row justify-between">
           <div className="flex flex-col basis-1/3">
-            <label className="">특정 품목명 선택하기</label>
+            <label className="">특정 물품 선택하기</label>
             <input name="stuff_name" value={input.stuff_name} onChange={onChange}
               type="text" placeholder="선택사항입니다." />
           </div>
@@ -676,9 +676,9 @@ function Revise() {
               type="text" placeholder="자동발주 기준" />
           </div>
           <div className="flex flex-col">
-            <label className="">물품코드</label>
+            <label className="">상품분류코드</label>
             <input name="stuffcode" value={input.stuffcode} onChange={onChange}
-              type="text" placeholder="물품코드" />
+              type="text" placeholder="상품분류코드" />
           </div>
           <div className="flex flex-col">
             <label className="">정가</label>
