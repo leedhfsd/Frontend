@@ -227,7 +227,7 @@ function BuyList() {
                 <td>{item.buycode}</td>
                 <td>{item.price}</td>
                 <td>{item.buy_num}</td>
-                <td>{item.buy_date}</td>
+                <td>{item.buy_date.substring(0, 10)}</td>
               </tr>
             )}
           </tbody>
