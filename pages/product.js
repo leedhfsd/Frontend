@@ -753,12 +753,13 @@ export default function Product() {
                 <option value="revise">물품정보 수정</option>
                 <option value="buy">물품구매 추가</option>
                 <option value="buyList">물품구매 조회</option>
+                <option value="stock">재고 관리</option>
               </select>
             </div>
           </div>
         </article>
         <Stock />
-        {/* {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : (type === "buy" ? <Buy /> : <BuyList />)))} */}
+        {/* {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : (type === "buy" ? <Buy /> : (type === "buyList" ? <BuyList /> : <Stock />))))} */}
       </main>
     </div>
   )
