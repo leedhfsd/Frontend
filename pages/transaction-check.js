@@ -22,8 +22,8 @@ function Profit() {
 
   async function handleClick(event) {
     event.preventDefault();
-    if (input.sumcode === "" || input.profitcode === "" || input.enddate === "" || input.startdate === "") {
-      alert("모든 칸을 입력해주세요.");
+    if (input.sumcode === "" || input.enddate === "" || input.startdate === "") {
+      alert("날짜를 입력해주세요.");
       return;
     }
 
@@ -111,8 +111,8 @@ function Spending() {
 
   async function handleClick(event) {
     event.preventDefault();
-    if (input.sumcode === "" || input.costcode === "" || input.enddate === "" || input.startdate === "") {
-      alert("모든 칸을 입력해주세요.");
+    if (input.sumcode === "" || input.enddate === "" || input.startdate === "") {
+      alert("날짜를 입력해주세요.");
       return;
     }
     const url = `http://localhost:3001/cost/?startdate=${input.startdate}&enddate=${input.enddate}&costcode=${input.costcode}&sumcode=${input.sumcode}`
