@@ -289,8 +289,6 @@ function Revise() {
       "stuffcode": "",
       "fixed_price": "",
     })
-
-    console.log(enter);
   }
 
   async function handleSubmit(e) {
@@ -298,8 +296,8 @@ function Revise() {
     console.log(JSON.stringify(enter));
 
     try {
-      const res = await axios.put(`http://localhost:3001/stuff/uitem`, enter).then(alert("물품정보를 업데이트했습니다"));
-      console.log("result: ", res.data);
+      const res = await axios.put(`http://localhost:3001/stuff/uitem`, enter).then(alert("물품정보를 업데이트했습니다"))
+      console.log("result: ", res);
       setResult(data);
     } catch (err) {
       console.log(err);
@@ -321,9 +319,9 @@ function Revise() {
               type="text" placeholder="자동발주 기준" />
           </div>
           <div className="flex flex-col basis-1/7">
-            <label className="">원가</label>
+            <label className="">물품코드</label>
             <input name="stuffcode" value={input.stuffcode} onChange={onChange}
-              type="text" placeholder="원가" />
+              type="text" placeholder="물품코드" />
           </div>
           <div className="flex flex-col basis-1/7">
             <label className="">정가</label>
@@ -342,7 +340,7 @@ function Revise() {
           <thead align="center" className="border-y-2 border-sky-700">
             <td width="25%">물품 번호</td>
             <td width="25%">자동발주 기준</td>
-            <td width="25%">원가</td>
+            <td width="25%">물품코드</td>
             <td width="25%">정가</td>
           </thead>
           {enter?.map((item, index) =>
