@@ -121,7 +121,7 @@ function Stock() {
           <thead align="" className="border-y-2 border-sky-700">
             <tr>
               <td width="25%">제품id</td>
-              <td width="25%">제품id</td>
+              <td width="25%">재고id</td>
               <td width="25%">유통기한</td>
               <td width="25%">재고량</td>
             </tr>
