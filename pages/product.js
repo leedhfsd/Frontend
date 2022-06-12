@@ -129,7 +129,7 @@ function Stock() {
               <tr align="left" key={index}>
                 <td>{item.stuff_id}</td>
                 <td>{item.stock_id}</td>
-                <td>{item.expired_date.substring(0, 10) + " " + item.expired_date.substring(11, 19)}</td>
+                <td>{item.expired_date == null ? "" : (item.expired_date.substring(0, 10) + " " + item.expired_date.substring(11, 19))}</td>
                 <td>{item.stock_num}</td>
               </tr>
             )}
