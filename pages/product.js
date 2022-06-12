@@ -4,6 +4,135 @@ import axios from "axios";
 import { string } from "nunjucks/src/filters";
 axios.defaults.withCredentials = true;
 
+function Stock() {
+  const [input, setInput] = useState({
+    stuff_name: "",
+    expired_date: "",
+    stock_num: "",
+    stock_id: "",
+    new_stock_num: ""
+  })
+  const [result, setResult] = useState([]);
+
+  const onChange = (event) => {
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    })
+  };
+
+  async function handleCheck(e) {
+    e.preventDefault();
+    setResult([]);
+    console.log("input: ", input);
+
+    const res = await axios.get(
+      `http://localhost:3001/stock`,
+    );
+    setResult(res.data);
+    console.log("test:, ", res.data);
+  }
+
+  async function handlePost(e) {
+    e.preventDefault();
+
+    const submit = {
+      stuff_name: input.stuff_name,
+      expired_date: input.expired_date,
+      stock_num: input.stock_num
+    }
+
+    try {
+      const res = await axios.post(`http://localhost:3001/stock`, submit).then(alert("물품 추가가 완료되었습니다."));
+      console.log("result: ", res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handlePut(e) {
+    e.preventDefault();
+    
+    const submit = {
+      stock_id: input.stock_id,
+      stock_num: input.new_stock_num
+    }
+
+    try {
+      const res = await axios.put(`http://localhost:3001/stock`, submit).then(alert("재고량을 업데이트했습니다"))
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  
+  return (
+    <div>
+      <article className="border-2 rounded-md">
+        <form className="flex flex-row justify-between">
+        <div>
+            <button onClick={handleCheck}
+              className="bg-sky-700 text-white rounded-md px-6 h-full">조회</button>
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">물품명</label>
+            <input name="stuff_name" value={input.stuff_name} onChange={onChange}
+              type="text" placeholder="물품명" />
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">유통기한</label>
+            <input name="expired_date" value={input.expired_date} onChange={onChange}
+              type="text" placeholder="유통기한" />
+          </div>
+          <div className="flex flex-col w-48">
+            <label className="">재고 설정하기</label>
+            <input name="stock_num" value={input.stock_num} onChange={onChange}
+              type="number" placeholder="재고량" />
+          </div>
+          <div>
+            <button onClick={handlePost}
+              className="bg-sky-700 text-white rounded-md px-6 h-full">추가</button>
+          </div>
+          <div className="flex flex-col w-48">
+            <label className="">재고id</label>
+            <input name="stock_id" value={input.stock_id} onChange={onChange}
+              type="number" placeholder="재고id" />
+          </div>
+          <div className="flex flex-col w-48">
+            <label className="">재고량 입력</label>
+            <input name="new_stock_num" value={input.new_stock_num} onChange={onChange}
+              type="number" placeholder="새 재고량" />
+          </div>
+          <div>
+            <button onClick={handlePut}
+              className="bg-sky-700 text-white rounded-md px-6 h-full">수정</button>
+          </div>
+        </form>
+      </article>
+      <article className="my-16 border-2">
+        <div>총 {result.length}건</div>
+        <table className="w-full">
+          <thead align="" className="border-y-2 border-sky-700">
+            <tr>
+              <td width="30%">제품id</td>
+              <td width="40%">유통기한</td>
+              <td width="30%">재고량</td>
+            </tr>
+          </thead>
+          <tbody>
+            {result?.map((item, index) =>
+              <tr align="left" key={index}>
+                <td>{item.stock_id}</td>
+                <td>{item.expired_date.substring(0, 10) + " " + item.expired_date.substring(11, 19)}</td>
+                <td>{item.stock_num}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </article>
+    </div>
+  );
+}
+
 function BuyList() {
   const [input, setInput] = useState({
     startdate: "",
@@ -629,7 +758,8 @@ export default function Product() {
             </div>
           </div>
         </article>
-        {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : (type === "buy" ? <Buy /> : <BuyList />)))}
+        <Stock />
+        {/* {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : (type === "buy" ? <Buy /> : <BuyList />)))} */}
       </main>
     </div>
   )
