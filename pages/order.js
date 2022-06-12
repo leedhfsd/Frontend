@@ -66,7 +66,7 @@ function Check() {
               <td width="16%">발주 개수</td>
               <td width="16%">비용</td>
               <td width="16%">시간</td>
-              <td width="16%">상품분류코드</td>
+              <td width="16%">물품id</td>
               <td width="16%">지점코드</td>
               <td width="4%">삭제</td>
             </tr>

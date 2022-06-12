@@ -122,8 +122,8 @@ function Cost() {
   
   const handleClick = (event) => {
     event.preventDefault();
-    if (input.time === "" || input.cost_size === "" || input.costcode === "") {
-      alert("모든 칸을 입력해주세요.");
+    if (input.time === ""|| input.costcode === "") {
+      alert("시간과 코드를 입력해주세요.");
       return;
     }
     setEnter([...enter, input]);
