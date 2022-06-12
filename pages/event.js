@@ -28,10 +28,10 @@ function Check() {
 
   async function handleClick(e) {
     e.preventDefault();
-    if (input.stuff_name === "" || input.event_type=== "") {
-      alert("필수 사항을 입력해주세요.");
-      return;
-    }
+    // if (input.stuff_name === "" || input.event_type=== "") {
+    //   alert("필수 사항을 입력해주세요.");
+    //   return;
+    // }
     setInput({
       event_type:"",
       stuff_name:"",
