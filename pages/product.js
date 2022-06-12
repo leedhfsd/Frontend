@@ -160,12 +160,15 @@ function BuyList() {
 
   async function handleClick(e) {
     e.preventDefault();
-    setResult([]);
     const res = await axios.get(
       `http://localhost:3001/buy?startdate=${input.startdate}&enddate=${input.enddate}&buycode=${input.buycode}&age=${input.age}&sex=${input.sex}&sumcode=${input.sumcode}` 
     );
-    setResult(res.data);
-    console.log("result: ", result);
+    if (input.sumcode === '0') {
+      setResult(res.data);
+    } else {
+      alert("구매가격의 총합은 " + res.data[0].sumPrice + "원 입니다.");
+    }
+    console.log("result: ", res.data);
   }
 
   return (
@@ -221,7 +224,7 @@ function BuyList() {
             </tr>
           </thead>
           <tbody>
-            {result?.map((item, index) =>
+            {input.sumcode === '0' ? result?.map((item, index) =>
               <tr align="left" key={index}>
                 <td>{item.stuff_id}</td>
                 <td>{item.buycode}</td>
@@ -229,7 +232,7 @@ function BuyList() {
                 <td>{item.buy_num}</td>
                 <td>{item.buy_date.substring(0, 10)}</td>
               </tr>
-            )}
+            ) : <tr></tr>}
           </tbody>
         </table>
       </article>
