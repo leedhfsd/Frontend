@@ -4,6 +4,125 @@ import axios from "axios";
 import { string } from "nunjucks/src/filters";
 axios.defaults.withCredentials = true;
 
+function BuyList() {
+  const [input, setInput] = useState({
+    startdate: "",
+    enddate: "",
+    buycode: "",
+    age: "",
+    sex: "",
+    sumcode: "",
+  })
+  const [result, setResult] = useState([]);
+
+  const onChange = (event) => {
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    })
+  };
+
+  async function handleClick(e) {
+    e.preventDefault();
+    setResult([]);
+    console.log("input: ", input);
+
+    const res = await axios.get(
+      `http://localhost:3001/stuff`, input
+    );
+
+    let a = res.data;
+
+    if (input.stuff_name !== "") {
+      // setResult(res.data.filter((item, index) => (input.stuff_name === item.stuff_name)));
+      a = res.data.filter((item, index) => (input.stuff_name === item.stuff_name));
+    } else {
+      a = res.data;
+    }
+    if (input.stuff_id !== "") {
+      // setResult(res.data.filter((item, index) => (input.stuff_id === string(item.stuff_id))));
+      a = a.filter((item, index) => (input.stuff_id === string(item.stuff_id)));
+    }
+    if (input.stuffcode !== "") {
+      // setResult(res.data.filter((item, index) => (input.stuffcode === string(item.stuffcode))));
+      a = a.filter((item, index) => (input.stuffcode === string(item.stuffcode)));
+    }
+    setResult(a);
+  }
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  return (
+    <div>
+      <article className="border-2 rounded-md">
+        <form className="flex flex-row justify-between">
+          <div className="flex flex-col basis-1/6">
+            <label className="">시작일</label>
+            <input name="startdate" value={input.startdate} onChange={onChange}
+              type="text" placeholder="선택사항입니다." />
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">종료일</label>
+            <input name="enddate" value={input.enddate} onChange={onChange}
+              type="text" placeholder="선택사항입니다." />
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">구매 코드</label>
+            <input name="buycode" value={input.buycode} onChange={onChange}
+              type="number" placeholder="선택사항입니다." />
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">나이</label>
+            <input name="age" value={input.age} onChange={onChange}
+              type="number" placeholder="선택사항입니다." />
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">성별</label>
+            <input name="sex" value={input.sex} onChange={onChange}
+              type="number" placeholder="선택사항입니다." />
+          </div>
+          <div className="flex flex-col basis-1/6">
+            <label className="">sumcode</label>
+            <input name="sumcode" value={input.sumcode} onChange={onChange}
+              type="number" placeholder="선택사항입니다." />
+          </div>
+          <div>
+            <button onClick={handleClick}
+              className="bg-sky-700 text-white rounded-md px-6 h-full">조회</button>
+          </div>
+        </form>
+      </article>
+      <article className="my-16 border-2">
+        <div>총 {result.length}건</div>
+        <table className="w-full">
+          <thead align="" className="border-y-2 border-sky-700">
+            <tr>
+              <td width="20%">재고량</td>
+              <td width="20%">시각</td>
+              <td width="20%">구매 코드</td>
+              <td width="20%">가격</td>
+              <td width="20%">구매 수량</td>
+            </tr>
+          </thead>
+          <tbody>
+            {result?.map((item, index) =>
+              <tr align="left" key={index}>
+                <td>{item.stuff_id}</td>
+                <td>{item.time}</td>
+                <td>{item.buycode}</td>
+                <td>{numberWithCommas(item.price)}</td>
+                <td>{item.buy_num}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </article>
+    </div>
+  );
+}
+
 function Buy() {
   const [input, setInput] = useState({
     "buy_num": "",
@@ -46,7 +165,7 @@ function Buy() {
     console.log(JSON.stringify(enter));
 
     try {
-      const res = await axios.post(`http://localhost:3001/stuff/buy`, enter).then(alert("구매처리가 완료되었습니다"));
+      const res = await axios.post(`http://localhost:3001/buy`, enter).then(alert("구매처리가 완료되었습니다"));
       console.log("result: ", res.data);
       setEnter([]);
     } catch (err) {
@@ -505,12 +624,12 @@ export default function Product() {
                 <option value="enter">물품 추가</option>
                 <option value="revise">물품정보 수정</option>
                 <option value="buy">물품구매 추가</option>
-                <option value="buy">물품구매 조회</option>
+                <option value="buyList">물품구매 조회</option>
               </select>
             </div>
           </div>
         </article>
-        {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : <Buy />))}
+        {type === "check" ? <Check /> : (type === "enter" ? <Enter /> : (type === "revise" ? <Revise /> : (type === "buy" ? <Buy /> : <BuyList />)))}
       </main>
     </div>
   )
